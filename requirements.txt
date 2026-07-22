@@ -1,0 +1,14 @@
+# Audio
+sounddevice>=0.4.6
+soundfile>=0.12.1
+numpy>=1.24.0
+
+# Virtual gamepad (also needs ViGEmBus driver on Windows)
+# Download ViGEmBus from: https://github.com/nefarius/ViGEmBus/releases
+vgamepad>=0.1.0
+
+# Text-to-speech
+pyttsx3>=2.90
+
+# Profanity / hate-word filter
+better-profanity>=0.7.0
