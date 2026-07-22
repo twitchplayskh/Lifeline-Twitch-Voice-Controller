@@ -1,4 +1,4 @@
-[README(1).md](https://github.com/user-attachments/files/30281004/README.1.md)
+(https://github.com/user-attachments/files/30281004/README.1.md)
 #  Lifeline Twitch Voice Controller
 
 > **Crowd-plays Lifeline: Operator's Side (PS2) through Twitch chat.**  
