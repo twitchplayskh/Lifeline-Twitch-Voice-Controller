@@ -111,7 +111,7 @@ python lifeline_bot.py
 
 ### Get a Twitch OAuth Token
 
-1. Go to **https://twitchapps.com/tmi/**
+1. Go to **https://twitchtokengenerator.com/**
 2. Click **Connect with Twitch** and authorise
 3. Copy the token (starts with `oauth:`)
 4. Paste it into `Settings → Twitch IRC → OAuth token`
