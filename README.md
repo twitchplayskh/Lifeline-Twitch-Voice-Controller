@@ -1,7 +1,7 @@
-#  Lifeline Twitch Voice Controller
+FRIO#  Lifeline Twitch Voice Controller
 
 > **Crowd-plays Lifeline: Operator's Side (PS2) through Twitch chat.**  
-> Chat types commands → the bot holds Circle and speaks them to Rio via a virtual microphone.
+> Chat types commands → the bot holds Circle and speaks them to Operator via a virtual microphone.
 
 ![Platform](https://img.shields.io/badge/platform-Windows-blue)
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue)
@@ -11,7 +11,7 @@
 
 ## What Is This?
 
-**Lifeline: Operator's Side** (2003, PS2/Konami) is a unique game entirely controlled by voice — you speak commands into a microphone and Rio, the character you're guiding, responds. There are no button presses for gameplay; the PS2 microphone IS the controller.
+**Lifeline: Operator's Side** (2003, PS2/Konami) is a unique game entirely controlled by voice — you speak commands into a microphone and Operator, the character you're guiding, responds. There are no button presses for gameplay; the PS2 microphone IS the controller.
 
 This program connects to your Twitch chat and lets your viewers collectively voice-control the game. When someone types a recognised command word or phrase, the bot:
 
@@ -20,7 +20,7 @@ This program connects to your Twitch chat and lets your viewers collectively voi
 3. Plays the **audio file** for that command — or **synthesises it via TTS** if no file exists — through a **virtual audio cable routed as a microphone**
 4. **Releases Circle** after the audio finishes
 
-Rio hears the command as if it came from a real microphone.
+Operator hears the command as if it came from a real microphone.
 
 ---
 
@@ -155,7 +155,7 @@ In Lifeline, the **Circle button activates the microphone**. The correct sequenc
 Press Circle  →  wait 0.5s  →  speak the command  →  release Circle
 ```
 
-The 0.5 second pause after pressing Circle is critical — the game needs this time to start listening. Speak too soon and Rio won't register anything.
+The 0.5 second pause after pressing Circle is critical — the game needs this time to start listening. Speak too soon and Operator won't register anything.
 
 The bot replicates this automatically:
 
@@ -291,7 +291,7 @@ Set this folder under `Settings → Audio → Audio files folder`.
 
 ## Troubleshooting
 
-**Rio doesn't react to commands**
+**Operator doesn't react to commands**
 - Confirm VB-Cable is installed and the app output device is set to "CABLE Input"
 - Confirm PCSX2 microphone is set to "CABLE Output"
 - Confirm the Circle button registers in PCSX2's controller test screen
