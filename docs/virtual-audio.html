@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virtual Audio Cable — Lifeline Twitch Voice Controller</title>
+<link rel="stylesheet" href="style.css"></head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><div class="game-title">Lifeline: Operator's Side</div><div class="proj-title">Twitch Voice Controller</div></div>
+  <div class="nav-section"><div class="nav-section-label">Getting Started</div>
+    <a href="index.html">Introduction</a><a href="requirements.html">Requirements</a><a href="installation.html">Installation</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Setup Guides</div>
+    <a href="virtual-audio.html" class="active">Virtual Audio Cable <span class="badge">Required</span></a>
+    <a href="twitch.html">Twitch Connection</a><a href="controller.html">Virtual Controller</a>
+    <a href="pcsx2.html">PCSX2 Configuration</a><a href="audio-files.html">Audio Files</a><a href="tts.html">Text-to-Speech</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Using the Bot</div>
+    <a href="settings.html">Settings Reference</a><a href="commands.html">Commands List</a>
+    <a href="timing.html">Circle Button Timing</a><a href="chat-buttons.html">Chat Button Commands</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Help</div><a href="troubleshooting.html">Troubleshooting</a></div>
+</nav>
+<main class="main">
+  <div class="page-hero">
+    <div class="eyebrow">Setup Guides</div>
+    <h1>Virtual Audio Cable</h1>
+    <p class="lead">The most critical piece of the setup. Without this the game will never hear any commands.</p>
+  </div>
+
+  <div class="callout danger">
+    <div class="callout-icon">🛑</div>
+    <div class="callout-body">
+      <div class="callout-title">This step is not optional</div>
+      <p>The game expects a real USB microphone plugged into the PS2. The virtual audio cable tricks PCSX2 into thinking the bot's audio playback IS that microphone. Without it, there is nothing to route audio through and the game receives only silence.</p>
+    </div>
+  </div>
+
+  <h2>Why a Virtual Audio Cable?</h2>
+  <p>Think of VB-Cable as a virtual pipe with two ends:</p>
+  <ul>
+    <li><strong>CABLE Input</strong> — anything played to this device comes out the other end</li>
+    <li><strong>CABLE Output</strong> — appears to Windows and other apps as a microphone</li>
+  </ul>
+  <p>The bot plays audio to <em>CABLE Input</em>. PCSX2 reads audio from <em>CABLE Output</em> as if it were a real microphone. The game hears the command exactly as it would if someone spoke into a headset.</p>
+
+  <div class="diagram">
+    <div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;">
+      <div><div class="box">Lifeline Bot<br><small>plays audio</small></div></div>
+      <span class="arrow">→</span>
+      <div><div class="box" style="border-color:#e94560;color:#e94560;">CABLE Input<br><small>VB-Audio</small></div></div>
+      <span class="arrow">→</span>
+      <div><div class="box" style="border-color:#56d364;color:#56d364;">CABLE Output<br><small>acts as mic</small></div></div>
+      <span class="arrow">→</span>
+      <div><div class="box">PCSX2<br><small>microphone in</small></div></div>
+      <span class="arrow">→</span>
+      <div><div class="box">Game<br><small>hears command</small></div></div>
+    </div>
+  </div>
+
+  <h2>Installing VB-Cable</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Download VB-Cable</h4>
+        <p>Go to <a href="https://vb-audio.com/Cable" target="_blank">vb-audio.com/Cable</a> and click the Download button. The download is a zip file containing the installer.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Run the installer as Administrator</h4>
+        <p>Extract the zip. Right-click <code>VBCABLE_Setup_x64.exe</code> and choose <strong>Run as administrator</strong>. Click Install Driver in the dialog. Windows may show a security warning — click Install to continue.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Reboot</h4>
+        <p><strong>You must reboot your PC.</strong> The driver is not active until after a restart. This is not optional — the devices will not appear in Windows until you reboot.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Verify the devices appear</h4>
+        <p>After rebooting, right-click the speaker icon in the taskbar and open <strong>Sound settings</strong>. You should now see <em>CABLE Input (VB-Audio Virtual Cable)</em> as a playback device and <em>CABLE Output (VB-Audio Virtual Cable)</em> as a recording device.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout warning">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-body">
+      <div class="callout-title">Don't set CABLE Input as your Windows default playback device</div>
+      <p>If you set CABLE Input as your default speaker, all your system audio will go through the virtual cable and you won't hear anything from your PC. Only the bot should send audio to it — everything else stays on your normal speakers/headphones.</p>
+    </div>
+  </div>
+
+  <h2>Configuring the Bot</h2>
+  <p>Open the bot and go to <strong>⚙️ Settings → Audio → Output device</strong>. Click the refresh button (↻) if the list is empty. Select <strong>CABLE Input (VB-Audio Virtual Cable)</strong> from the dropdown and click <strong>💾 Save Settings</strong>.</p>
+
+  <h2>Configuring PCSX2</h2>
+  <p>See the <a href="pcsx2.html">PCSX2 Configuration</a> page for the full walkthrough. In short: in PCSX2, go to <strong>Settings → Audio</strong> and set the <strong>Microphone</strong> input to <strong>CABLE Output (VB-Audio Virtual Cable)</strong>.</p>
+
+  <h2>Testing the Routing</h2>
+  <p>To confirm audio is flowing from the bot to PCSX2 before loading the game:</p>
+  <ol>
+    <li>Connect the bot to your Twitch channel</li>
+    <li>In PCSX2, open Settings → Audio — there should be a microphone level meter</li>
+    <li>In your Twitch chat, type <code>yes</code></li>
+    <li>The level meter in PCSX2 should spike when the bot plays the audio</li>
+  </ol>
+  <p>If the meter does not move, the output device in the bot is not set to CABLE Input, or PCSX2's microphone input is not set to CABLE Output.</p>
+
+  <h2>Your Own Microphone for Commentary</h2>
+  <p>Your real microphone for talking to your stream audience is completely separate. It goes through your normal audio interface and OBS/streaming software as usual. The virtual cable only carries the bot's command audio. The two systems do not interfere with each other.</p>
+  <p>If you also want your own voice to reach the game (for example to test commands yourself), you would need VoiceMeeter to mix both your mic and the bot audio together and route them to PCSX2. This is an advanced setup not covered here.</p>
+
+  <div class="page-nav">
+    <a href="installation.html"><span class="nav-dir">← Previous</span><span class="nav-title">Installation</span></a>
+    <a href="twitch.html" class="next"><span class="nav-dir">Next →</span><span class="nav-title">Twitch Connection</span></a>
+  </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Twitch Connection — Lifeline Twitch Voice Controller</title>
+<link rel="stylesheet" href="style.css"></head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><div class="game-title">Lifeline: Operator's Side</div><div class="proj-title">Twitch Voice Controller</div></div>
+  <div class="nav-section"><div class="nav-section-label">Getting Started</div>
+    <a href="index.html">Introduction</a><a href="requirements.html">Requirements</a><a href="installation.html">Installation</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Setup Guides</div>
+    <a href="virtual-audio.html">Virtual Audio Cable <span class="badge">Required</span></a>
+    <a href="twitch.html" class="active">Twitch Connection</a><a href="controller.html">Virtual Controller</a>
+    <a href="pcsx2.html">PCSX2 Configuration</a><a href="audio-files.html">Audio Files</a><a href="tts.html">Text-to-Speech</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Using the Bot</div>
+    <a href="settings.html">Settings Reference</a><a href="commands.html">Commands List</a>
+    <a href="timing.html">Circle Button Timing</a><a href="chat-buttons.html">Chat Button Commands</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Help</div><a href="troubleshooting.html">Troubleshooting</a></div>
+</nav>
+<main class="main">
+  <div class="page-hero">
+    <div class="eyebrow">Setup Guides</div>
+    <h1>Twitch Connection</h1>
+    <p class="lead">How to connect the bot to your Twitch channel so it can read chat messages.</p>
+  </div>
+
+  <h2>How It Works</h2>
+  <p>The bot connects to Twitch using the IRC (Internet Relay Chat) protocol — the same underlying system Twitch uses for all chat. It reads every message in your channel and scans for recognised command words. It does not post messages to chat (it is read-only).</p>
+  <p>To connect, it needs two things: your channel name and an OAuth token that proves it has permission to read your chat.</p>
+
+  <h2>Getting Your OAuth Token</h2>
+  <div class="callout info">
+    <div class="callout-icon">ℹ️</div>
+    <div class="callout-body"><p>An OAuth token is a password-like string that lets an application access your Twitch account without knowing your real password. This token only grants chat-read permission — it cannot stream on your behalf, change your settings, or do anything else.</p></div>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Go to twitchapps.com/tmi</h4>
+        <p>Open <a href="https://twitchapps.com/tmi/" target="_blank">twitchapps.com/tmi</a> in your browser. This is a simple Twitch-authorised tool specifically for generating IRC tokens.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Connect with Twitch</h4>
+        <p>Click the <strong>Connect with Twitch</strong> button. You will be redirected to Twitch's login and authorisation page. Log in with the account you want the bot to use (usually your own streaming account).</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Copy the token</h4>
+        <p>After authorising, you will be shown a token that looks like <code>oauth:abcdefghij1234567890abcdefghij</code>. Copy the entire string including the <code>oauth:</code> prefix.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Paste into the bot</h4>
+        <p>In the bot, go to <strong>⚙️ Settings → Twitch IRC → OAuth token</strong> and paste the token. The field shows asterisks to keep it hidden — this is normal.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout warning">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-body">
+      <div class="callout-title">Keep your token private</div>
+      <p>Treat the OAuth token like a password. Do not share it, paste it into stream, or commit it to a public GitHub repository. If it is ever exposed, revoke it at <a href="https://www.twitch.tv/settings/connections" target="_blank">twitch.tv/settings/connections</a> and generate a new one.</p>
+    </div>
+  </div>
+
+  <h2>Channel Name</h2>
+  <p>Enter your Twitch channel name in the <strong>Channel name</strong> field. This is just your username — do not include the <code>#</code> symbol. For example if your channel is <code>twitch.tv/mychannel</code>, enter <code>mychannel</code>.</p>
+  <p>The bot can connect to any public Twitch channel, not just your own. If you want to monitor a different channel, enter that channel's name instead.</p>
+
+  <h2>Connecting</h2>
+  <p>After saving settings, go to the <strong>🎮 Live Feed</strong> tab and click <strong>▶ Connect</strong>.</p>
+  <ul>
+    <li>The indicator shows <em>⬤ Connecting…</em> in orange while the IRC handshake happens</li>
+    <li>It turns <em>⬤ Live</em> in green once successfully joined</li>
+    <li>Chat messages appear in the left panel in real time</li>
+    <li>Command words are highlighted in gold in the chat panel</li>
+  </ul>
+  <p>To disconnect, click <strong>■ Disconnect</strong>. To reconnect to a different channel, disconnect first, change the channel name in Settings, save, then reconnect.</p>
+
+  <h2>The Chat Log</h2>
+  <p>The left panel on the Live Feed tab shows all chat messages as they arrive. Messages containing recognised command words have those words highlighted in gold so you can see at a glance what the bot is picking up. The right panel shows only the commands that actually fired (with Circle timing details).</p>
+  <p>The <strong>🗑 Clear Log</strong> button wipes both panels without disconnecting.</p>
+
+  <h2>Cooldown</h2>
+  <p>The cooldown setting (under <strong>Settings → Playback → Command cooldown</strong>) controls the minimum number of seconds that must pass before the same command can fire again. This prevents a single word from being spammed endlessly. The default is 1.5 seconds.</p>
+  <p>The cooldown applies per command word — different words can fire simultaneously regardless of cooldown.</p>
+
+  <div class="page-nav">
+    <a href="virtual-audio.html"><span class="nav-dir">← Previous</span><span class="nav-title">Virtual Audio Cable</span></a>
+    <a href="controller.html" class="next"><span class="nav-dir">Next →</span><span class="nav-title">Virtual Controller</span></a>
+  </div>
+</main>
+</body>
+</html>

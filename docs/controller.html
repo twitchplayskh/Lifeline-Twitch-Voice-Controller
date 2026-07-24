@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virtual Controller — Lifeline Twitch Voice Controller</title>
+<link rel="stylesheet" href="style.css"></head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><div class="game-title">Lifeline: Operator's Side</div><div class="proj-title">Twitch Voice Controller</div></div>
+  <div class="nav-section"><div class="nav-section-label">Getting Started</div>
+    <a href="index.html">Introduction</a><a href="requirements.html">Requirements</a><a href="installation.html">Installation</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Setup Guides</div>
+    <a href="virtual-audio.html">Virtual Audio Cable <span class="badge">Required</span></a>
+    <a href="twitch.html">Twitch Connection</a><a href="controller.html" class="active">Virtual Controller</a>
+    <a href="pcsx2.html">PCSX2 Configuration</a><a href="audio-files.html">Audio Files</a><a href="tts.html">Text-to-Speech</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Using the Bot</div>
+    <a href="settings.html">Settings Reference</a><a href="commands.html">Commands List</a>
+    <a href="timing.html">Circle Button Timing</a><a href="chat-buttons.html">Chat Button Commands</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Help</div><a href="troubleshooting.html">Troubleshooting</a></div>
+</nav>
+<main class="main">
+  <div class="page-hero">
+    <div class="eyebrow">Setup Guides</div>
+    <h1>Virtual Controller</h1>
+    <p class="lead">How the bot presses the Circle button automatically, and how to set up the PS2 button commands for chat.</p>
+  </div>
+
+  <h2>Why a Virtual Controller?</h2>
+  <p>In Lifeline, holding the <strong>Circle button</strong> activates the microphone. The game will not listen to mic input unless Circle is being held. The bot creates a virtual PS2-compatible controller and holds Circle for you automatically on every voice command.</p>
+  <p>Without this, the audio would play through the virtual cable but the game would ignore it because the mic activation button is never pressed.</p>
+
+  <h2>Installing ViGEmBus</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Download ViGEmBus</h4>
+        <p>Go to <a href="https://github.com/nefarius/ViGEmBus/releases" target="_blank">github.com/nefarius/ViGEmBus/releases</a> and download the latest <strong>ViGEmBus_Setup_x64.exe</strong>.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Install it</h4>
+        <p>Run the installer. It will install a kernel driver that Windows uses to recognise virtual controllers.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Reboot</h4>
+        <p><strong>You must reboot.</strong> The driver is not active until after a restart.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Install the Python package</h4>
+        <p>Run <code>pip install vgamepad</code> if you haven't already (it's included in requirements.txt).</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Enabling the Controller in the Bot</h2>
+  <p>In the bot, go to <strong>⚙️ Settings → Virtual Controller</strong>:</p>
+  <ol>
+    <li>Tick <strong>Enable virtual controller</strong></li>
+    <li>Choose <strong>DS4 (PlayStation)</strong> — this is what PCSX2 maps most naturally to a PS2 controller. If DS4 fails, try Xbox 360.</li>
+    <li>Click <strong>💾 Save Settings</strong></li>
+    <li>The status label should say <em>Virtual DS4 controller created</em></li>
+  </ol>
+
+  <h2>PS2 Button Reference</h2>
+  <p>For reference, here is what each PS2 button does in Lifeline:</p>
+  <table>
+    <tr><th>Button</th><th>Function in Lifeline</th><th>Bot usage</th></tr>
+    <tr><td><strong>Circle ○</strong></td><td>Hold to activate microphone input</td><td>Held automatically for every voice command</td></tr>
+    <tr><td>Square □</td><td>Confirm selections</td><td>Chat button command (optional)</td></tr>
+    <tr><td>Cross ×</td><td>Cancel selections</td><td>Chat button command (optional)</td></tr>
+    <tr><td>Triangle △</td><td>Show analysis points / enemy weak spots</td><td>Chat button command (optional)</td></tr>
+    <tr><td>L1</td><td>Open the map</td><td>Chat button command (optional)</td></tr>
+    <tr><td>R1</td><td>Item list / switch camera view</td><td>Chat button command (optional)</td></tr>
+    <tr><td>L2</td><td>Skip events or cutscenes</td><td>Chat button command (optional)</td></tr>
+    <tr><td>Start</td><td>Pause the game</td><td>Chat button command (optional)</td></tr>
+    <tr><td>Select</td><td>Skip events in some menus</td><td>Chat button command (optional)</td></tr>
+    <tr><td>D-Pad</td><td>Move cursor on monitor / interface</td><td>Not currently mapped</td></tr>
+  </table>
+
+  <div class="callout info">
+    <div class="callout-icon">ℹ️</div>
+    <div class="callout-body">
+      <div class="callout-title">Circle is always Circle</div>
+      <p>The microphone button is hardcoded to Circle — this cannot be changed in the settings because it is a fundamental part of how Lifeline works. The other buttons can be triggered from chat as separate commands without any Circle hold.</p>
+    </div>
+  </div>
+
+  <h2>Assigning in PCSX2</h2>
+  <p>After creating the virtual controller in the bot, you need to tell PCSX2 to use it. See <a href="pcsx2.html">PCSX2 Configuration</a> for the full walkthrough. In short: go to PCSX2 Settings → Controllers and map the virtual controller to Player 1.</p>
+
+  <h2>Testing the Controller</h2>
+  <p>Click <strong>Test Circle timing</strong> in the settings panel. This runs through the full press-pause-hold-release sequence without playing any audio. Watch the PCSX2 controller input display to confirm Circle registers.</p>
+  <p>If the button press does not appear in PCSX2's controller test:</p>
+  <ul>
+    <li>Make sure ViGEmBus is installed and you have rebooted</li>
+    <li>Make sure the virtual controller is assigned to Player 1 in PCSX2's controller settings</li>
+    <li>Try switching between DS4 and Xbox 360 mode — PCSX2 may recognise one better than the other</li>
+  </ul>
+
+  <div class="page-nav">
+    <a href="twitch.html"><span class="nav-dir">← Previous</span><span class="nav-title">Twitch Connection</span></a>
+    <a href="pcsx2.html" class="next"><span class="nav-dir">Next →</span><span class="nav-title">PCSX2 Configuration</span></a>
+  </div>
+</main>
+</body>
+</html>

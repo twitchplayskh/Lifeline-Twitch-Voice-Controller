@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chat Button Commands — Lifeline Twitch Voice Controller</title>
+<link rel="stylesheet" href="style.css"></head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><div class="game-title">Lifeline: Operator's Side</div><div class="proj-title">Twitch Voice Controller</div></div>
+  <div class="nav-section"><div class="nav-section-label">Getting Started</div>
+    <a href="index.html">Introduction</a><a href="requirements.html">Requirements</a><a href="installation.html">Installation</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Setup Guides</div>
+    <a href="virtual-audio.html">Virtual Audio Cable <span class="badge">Required</span></a>
+    <a href="twitch.html">Twitch Connection</a><a href="controller.html">Virtual Controller</a>
+    <a href="pcsx2.html">PCSX2 Configuration</a><a href="audio-files.html">Audio Files</a><a href="tts.html">Text-to-Speech</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Using the Bot</div>
+    <a href="settings.html">Settings Reference</a><a href="commands.html">Commands List</a>
+    <a href="timing.html">Circle Button Timing</a><a href="chat-buttons.html" class="active">Chat Button Commands</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Help</div><a href="troubleshooting.html">Troubleshooting</a></div>
+</nav>
+<main class="main">
+  <div class="page-hero">
+    <div class="eyebrow">Using the Bot</div>
+    <h1>Chat Button Commands</h1>
+    <p class="lead">Let chat press PS2 buttons directly — for confirming menu selections, opening the map, skipping cutscenes, and more. No Circle hold involved.</p>
+  </div>
+
+  <h2>What Are Chat Button Commands?</h2>
+  <p>Voice commands always hold Circle because that is how Lifeline's microphone works. But some actions in the game are done with regular PS2 buttons — confirming a selection, cancelling, opening the map, or pausing. These do not use the microphone at all.</p>
+  <p>Chat button commands let your viewers trigger these buttons by typing a word in chat. When the trigger word appears, the bot presses and immediately releases that button on the virtual controller — no Circle hold, no audio playback, no TTS. It is a direct button press.</p>
+
+  <h2>Default Button Assignments</h2>
+  <table>
+    <tr><th>PS2 Button</th><th>Default trigger word</th><th>Function in Lifeline</th></tr>
+    <tr><td><strong>Square □</strong></td><td><code>confirm</code></td><td>Confirm selections in menus and conversations</td></tr>
+    <tr><td><strong>Cross ×</strong></td><td><code>cancel</code></td><td>Cancel / go back in menus</td></tr>
+    <tr><td><strong>Triangle △</strong></td><td><code>analysis</code></td><td>Show analysis points or enemy weak spots during battle</td></tr>
+    <tr><td><strong>L1</strong></td><td><code>map</code></td><td>Open the map</td></tr>
+    <tr><td><strong>R1</strong></td><td><code>items</code></td><td>Show item list / switch camera view in battles</td></tr>
+    <tr><td><strong>L2</strong></td><td><code>skip</code></td><td>Skip events or cutscenes</td></tr>
+    <tr><td><strong>Start</strong></td><td><code>pause</code></td><td>Pause the game</td></tr>
+    <tr><td><strong>Select</strong></td><td><code>select</code></td><td>Skip events in some menus</td></tr>
+  </table>
+
+  <p>All buttons are <strong>off by default</strong>. You choose which ones to enable and can change the trigger word for each one.</p>
+
+  <h2>Enabling Chat Buttons</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Go to Settings → Virtual Controller → Chat-Triggered Button Commands</h4>
+        <p>Scroll down past the voice timing section. You will see a table with a row for each PS2 button.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Tick the "On" checkbox for each button you want active</h4>
+        <p>Only ticked buttons will respond to chat. Leave buttons off if you do not want chat to be able to trigger them — for example you might not want chat to be able to pause the game.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Customise the trigger word if needed</h4>
+        <p>Click into the trigger word field and type whatever word you want chat to use. The word does not need to be a Lifeline voice command — it is completely independent. Keep trigger words short and unambiguous.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Save Settings</h4>
+        <p>Click <strong>💾 Save Settings</strong>. The enabled state and trigger words are saved to config.json and restored on next launch.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout warning">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-body">
+      <div class="callout-title">Trigger words are automatically blocked from TTS</div>
+      <p>If you assign "confirm" as the Square trigger word, typing "confirm" in chat will press Square — but it will never also be spoken as a voice command. The word filter automatically prevents chat button trigger words from reaching TTS, so there is no risk of a button press accidentally triggering audio as well.</p>
+    </div>
+  </div>
+
+  <h2>How Trigger Detection Works</h2>
+  <p>Chat button scanning runs independently of the voice command system, at the very top of message processing before any Lifeline command matching happens. This means:</p>
+  <ul>
+    <li>The trigger word does <strong>not</strong> need to be in the Lifeline command list</li>
+    <li>Trigger words fire even if the message contains no voice commands at all</li>
+    <li>Trigger words are matched as whole words — typing <code>maps</code> will not trigger the <code>map</code> button</li>
+    <li>Multi-word triggers are supported — you could set a trigger like <code>open map</code></li>
+    <li>The bot logs <em>▶ L1 pressed</em> / <em>▶ L1 released</em> in the command feed so you can confirm it fired</li>
+  </ul>
+
+  <h2>Tips for Streamer Use</h2>
+  <ul>
+    <li><strong>Be selective</strong> — only enable buttons that are genuinely useful for chat to control. Having too many active buttons creates chaos.</li>
+    <li><strong>Avoid common words as triggers</strong> — if you set "yes" as a button trigger, it will press that button every time chat says yes as a voice command. Use distinct words that would not appear naturally in game commands.</li>
+    <li><strong>Consider the pause button carefully</strong> — enabling the Start/Pause button means any viewer can pause your game at any time. You may prefer to leave this one off.</li>
+    <li><strong>Announce trigger words to your stream</strong> — add the active trigger words to your channel's <code>!commands</code> bot response so viewers know what works.</li>
+  </ul>
+
+  <h2>Difference from Voice Commands</h2>
+  <table>
+    <tr><th></th><th>Voice Commands</th><th>Chat Button Commands</th></tr>
+    <tr><td><strong>Circle held</strong></td><td>Yes — always</td><td>No — never</td></tr>
+    <tr><td><strong>Audio played</strong></td><td>Yes — file or TTS</td><td>No</td></tr>
+    <tr><td><strong>Timing delays</strong></td><td>Yes — 0.5s pause etc.</td><td>No — instant press/release</td></tr>
+    <tr><td><strong>Must be in command list</strong></td><td>Yes</td><td>No — any word works</td></tr>
+    <tr><td><strong>Cooldown</strong></td><td>Yes</td><td>No</td></tr>
+    <tr><td><strong>Appears in command log</strong></td><td>Yes</td><td>Yes — shows button name</td></tr>
+  </table>
+
+  <div class="page-nav">
+    <a href="timing.html"><span class="nav-dir">← Previous</span><span class="nav-title">Circle Button Timing</span></a>
+    <a href="troubleshooting.html" class="next"><span class="nav-dir">Next →</span><span class="nav-title">Troubleshooting</span></a>
+  </div>
+</main>
+</body>
+</html>

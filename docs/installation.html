@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Installation — Lifeline Twitch Voice Controller</title>
+<link rel="stylesheet" href="style.css"></head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><div class="game-title">Lifeline: Operator's Side</div><div class="proj-title">Twitch Voice Controller</div></div>
+  <div class="nav-section"><div class="nav-section-label">Getting Started</div>
+    <a href="index.html">Introduction</a>
+    <a href="requirements.html">Requirements</a>
+    <a href="installation.html" class="active">Installation</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Setup Guides</div>
+    <a href="virtual-audio.html">Virtual Audio Cable <span class="badge">Required</span></a>
+    <a href="twitch.html">Twitch Connection</a>
+    <a href="controller.html">Virtual Controller</a>
+    <a href="pcsx2.html">PCSX2 Configuration</a>
+    <a href="audio-files.html">Audio Files</a>
+    <a href="tts.html">Text-to-Speech</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Using the Bot</div>
+    <a href="settings.html">Settings Reference</a>
+    <a href="commands.html">Commands List</a>
+    <a href="timing.html">Circle Button Timing</a>
+    <a href="chat-buttons.html">Chat Button Commands</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Help</div><a href="troubleshooting.html">Troubleshooting</a></div>
+</nav>
+<main class="main">
+  <div class="page-hero">
+    <div class="eyebrow">Getting Started</div>
+    <h1>Installation</h1>
+    <p class="lead">How to download, install and launch the bot for the first time.</p>
+  </div>
+
+  <h2>Step 1 — Download the Bot</h2>
+  <p>Download all files from the GitHub repository and put them in a folder on your PC. You need these four files in the same folder:</p>
+  <pre><code>lifeline_bot.py       ← the main program
+requirements.txt      ← Python package list
+run.bat               ← Windows launcher (optional but convenient)
+README.md             ← short reference</code></pre>
+  <div class="callout info">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body"><p>Put the folder somewhere easy to find, like <code>C:\lifeline-bot\</code> or your Desktop. Avoid paths with spaces or special characters.</p></div>
+  </div>
+
+  <h2>Step 2 — Install Python Packages</h2>
+  <p>Open a Command Prompt or PowerShell window <strong>in the folder where you saved the files</strong>.</p>
+  <p>The quickest way: in File Explorer, navigate to the folder, then click the address bar, type <code>cmd</code> and press Enter. A command prompt opens already pointing at that folder.</p>
+  <p>Then run:</p>
+  <pre><code>pip install -r requirements.txt</code></pre>
+  <p>You will see packages downloading and installing. Wait for it to complete. If you see errors about permissions, try:</p>
+  <pre><code>pip install -r requirements.txt --user</code></pre>
+
+  <h2>Step 3 — Launch the App</h2>
+  <p>You have two options:</p>
+  <h4>Option A — Double-click run.bat</h4>
+  <p>The easiest way. It checks for Python, installs/updates packages, then launches the bot. A console window stays open alongside the GUI — this is normal, it shows log output.</p>
+  <h4>Option B — Command line</h4>
+  <pre><code>python lifeline_bot.py</code></pre>
+
+  <p>The app window will open. You will see three tabs at the top: <strong>🎮 Live Feed</strong>, <strong>⚙️ Settings</strong>, and <strong>📋 Commands</strong>.</p>
+
+  <h2>Step 4 — First-Time Settings</h2>
+  <p>Before you can connect or use the bot you need to configure it. Go to the <strong>⚙️ Settings</strong> tab. Work through each section top to bottom:</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Twitch IRC</h4>
+        <p>Enter your channel name (no <code>#</code>) and your OAuth token. See <a href="twitch.html">Twitch Connection</a> for how to get the token.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Audio — Output Device</h4>
+        <p>Set the output device to <strong>CABLE Input (VB-Audio Virtual Cable)</strong>. If this option does not appear, VB-Cable is not installed or you have not rebooted. See <a href="virtual-audio.html">Virtual Audio Cable</a>.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Virtual Controller</h4>
+        <p>Tick <strong>Enable virtual controller</strong>. Choose DS4 or Xbox360. If enabling fails, ViGEmBus is not installed. See <a href="controller.html">Virtual Controller</a>.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>TTS</h4>
+        <p>Tick <strong>Enable TTS</strong> so words with no audio file are still spoken. Keep the word filter ticked.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <h4>Save</h4>
+        <p>Click <strong>💾 Save Settings</strong>. Settings are written to <code>config.json</code> in the same folder as the bot. They will be restored the next time you launch.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Step 5 — Connect</h2>
+  <p>Go to the <strong>🎮 Live Feed</strong> tab and click <strong>▶ Connect</strong>. The status indicator turns green and shows <em>⬤ Live</em> when connected. Chat messages will start appearing in the left panel. Triggered commands appear in the right panel.</p>
+
+  <div class="callout success">
+    <div class="callout-icon">✅</div>
+    <div class="callout-body">
+      <div class="callout-title">Test before going live</div>
+      <p>Type <code>yes</code> in your Twitch chat (or ask a friend to). You should see it appear in the chat log, highlighted in gold, and the command log should show <strong>▶ yes</strong> with a Circle HELD / Circle released pair. If you hear audio through your speakers as well as the cable, your output device is set to the wrong device.</p>
+    </div>
+  </div>
+
+  <h2>Files Created Automatically</h2>
+  <p>After first use, you will see these new files/folders appear alongside the bot:</p>
+  <table>
+    <tr><th>File/Folder</th><th>What it is</th></tr>
+    <tr><td><code>config.json</code></td><td>All your saved settings. Do not edit by hand. If it becomes corrupted, it is automatically backed up as <code>config.json.corrupted</code>.</td></tr>
+    <tr><td><code>_tts_cache/</code></td><td>Cached TTS audio files. One .wav per word/phrase. Safe to delete if you want to free space — they regenerate on demand.</td></tr>
+  </table>
+
+  <div class="page-nav">
+    <a href="requirements.html"><span class="nav-dir">← Previous</span><span class="nav-title">Requirements</span></a>
+    <a href="virtual-audio.html" class="next"><span class="nav-dir">Next →</span><span class="nav-title">Virtual Audio Cable</span></a>
+  </div>
+</main>
+</body>
+</html>

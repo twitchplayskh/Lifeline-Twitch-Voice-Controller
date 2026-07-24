@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings Reference — Lifeline Twitch Voice Controller</title>
+<link rel="stylesheet" href="style.css"></head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><div class="game-title">Lifeline: Operator's Side</div><div class="proj-title">Twitch Voice Controller</div></div>
+  <div class="nav-section"><div class="nav-section-label">Getting Started</div>
+    <a href="index.html">Introduction</a><a href="requirements.html">Requirements</a><a href="installation.html">Installation</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Setup Guides</div>
+    <a href="virtual-audio.html">Virtual Audio Cable <span class="badge">Required</span></a>
+    <a href="twitch.html">Twitch Connection</a><a href="controller.html">Virtual Controller</a>
+    <a href="pcsx2.html">PCSX2 Configuration</a><a href="audio-files.html">Audio Files</a><a href="tts.html">Text-to-Speech</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Using the Bot</div>
+    <a href="settings.html" class="active">Settings Reference</a><a href="commands.html">Commands List</a>
+    <a href="timing.html">Circle Button Timing</a><a href="chat-buttons.html">Chat Button Commands</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Help</div><a href="troubleshooting.html">Troubleshooting</a></div>
+</nav>
+<main class="main">
+  <div class="page-hero">
+    <div class="eyebrow">Using the Bot</div>
+    <h1>Settings Reference</h1>
+    <p class="lead">Every setting in the app explained — what it does, what the default is, and when to change it.</p>
+  </div>
+
+  <div class="callout info">
+    <div class="callout-icon">💾</div>
+    <div class="callout-body"><p>Settings are saved to <code>config.json</code> only when you click <strong>💾 Save Settings</strong>. Changes you make are not applied until you save. After saving, the bot applies the new values immediately without needing a restart.</p></div>
+  </div>
+
+  <h2>Twitch IRC</h2>
+  <table>
+    <tr><th>Setting</th><th>Default</th><th>Description</th></tr>
+    <tr><td><strong>Channel name</strong></td><td>empty</td><td>Your Twitch channel name without the <code>#</code> symbol. The bot joins this channel and reads all chat messages.</td></tr>
+    <tr><td><strong>OAuth token</strong></td><td>empty</td><td>Your Twitch IRC token from <a href="https://twitchapps.com/tmi/" target="_blank">twitchapps.com/tmi</a>. Displayed as asterisks. Required to connect.</td></tr>
+  </table>
+
+  <h2>Audio</h2>
+  <table>
+    <tr><th>Setting</th><th>Default</th><th>Description</th></tr>
+    <tr><td><strong>Audio files folder</strong></td><td>empty</td><td>Folder containing your <code>.wav</code>/<code>.mp3</code>/<code>.ogg</code> command audio files. Optional — TTS handles words with no file. See <a href="audio-files.html">Audio Files</a>.</td></tr>
+    <tr><td><strong>Output device</strong></td><td>Default</td><td>Where the bot plays audio. <strong>Must be set to CABLE Input (VB-Audio Virtual Cable)</strong> for the game to hear commands. See <a href="virtual-audio.html">Virtual Audio Cable</a>.</td></tr>
+    <tr><td><strong>↻ Refresh devices</strong></td><td>—</td><td>Re-scans audio devices. Use if you plugged in a new device or VB-Cable was not visible on first launch.</td></tr>
+  </table>
+
+  <h2>Playback</h2>
+  <table>
+    <tr><th>Setting</th><th>Default</th><th>Description</th></tr>
+    <tr><td><strong>Command cooldown</strong></td><td>1.5s</td><td>Minimum seconds between plays of the same command word. Prevents one word being spammed endlessly. Different words are not affected by each other's cooldowns.</td></tr>
+    <tr><td><strong>Volume</strong></td><td>1.0</td><td>Multiplier applied to all audio playback. 1.0 = normal, 2.0 = double, 0.5 = half. If the game is not registering commands, try increasing volume first.</td></tr>
+  </table>
+
+  <h2>Virtual Controller</h2>
+  <table>
+    <tr><th>Setting</th><th>Default</th><th>Description</th></tr>
+    <tr><td><strong>Enable virtual controller</strong></td><td>off</td><td>Creates a virtual gamepad using ViGEmBus. Must be ticked for any button presses to work. Requires ViGEmBus driver installed.</td></tr>
+    <tr><td><strong>Controller type</strong></td><td>DS4</td><td>DS4 (PlayStation) or Xbox 360. PCSX2 usually sees DS4 as a PS2-compatible controller. Switch to Xbox 360 if DS4 fails to initialise.</td></tr>
+    <tr><td><strong>Mic input button</strong></td><td>Circle ○ (fixed)</td><td>Always Circle — this cannot be changed. Lifeline uses Circle to activate the microphone. Informational only.</td></tr>
+    <tr><td><strong>Hold for full audio duration</strong></td><td>on</td><td>When ticked, Circle stays held from start to finish of the audio clip before releasing. Strongly recommended. See <a href="timing.html">Circle Button Timing</a>.</td></tr>
+    <tr><td><strong>Delay before press</strong></td><td>0.00s</td><td>Extra wait before Circle is pressed. Leave at 0 unless you have a specific reason.</td></tr>
+    <tr><td><strong>Pause after press</strong></td><td>0.50s</td><td>The most important timing. Circle is held this long before audio starts. The game needs this pause to start listening. See <a href="timing.html">Circle Button Timing</a>.</td></tr>
+    <tr><td><strong>Hold after audio</strong></td><td>0.00s</td><td>Extra time Circle stays held after the audio finishes. Try 0.1–0.2s if you get occasional misses.</td></tr>
+    <tr><td><strong>Pause after release</strong></td><td>0.00s</td><td>Dead-time after releasing Circle before the next command can start.</td></tr>
+    <tr><td><strong>Chat-Triggered Button Commands</strong></td><td>all off</td><td>Assign chat words to PS2 buttons (Square, Cross, Triangle, L1, R1, L2, Start, Select). These press the button without any Circle hold. See <a href="chat-buttons.html">Chat Button Commands</a>.</td></tr>
+    <tr><td><strong>Test Circle timing</strong></td><td>—</td><td>Runs through the full press-pause-hold-release sequence without audio. Useful for confirming the virtual controller is working in PCSX2.</td></tr>
+    <tr><td><strong>Reset to defaults</strong></td><td>—</td><td>Resets all timing spinboxes to their default values.</td></tr>
+  </table>
+
+  <h2>Text-to-Speech</h2>
+  <table>
+    <tr><th>Setting</th><th>Default</th><th>Description</th></tr>
+    <tr><td><strong>Enable TTS</strong></td><td>off</td><td>When on, words with no audio file are synthesised via pyttsx3. Recommended — without this, many commands are silently skipped.</td></tr>
+    <tr><td><strong>Always use TTS</strong></td><td>off</td><td>Ignores all audio files and synthesises everything via TTS. Useful for consistent voice or testing.</td></tr>
+    <tr><td><strong>Filter hateful / explicit words</strong></td><td>on</td><td>Blocks slurs and explicit words from ever being spoken. Also blocks chat button trigger words from reaching TTS. Keep this on.</td></tr>
+    <tr><td><strong>TTS voice</strong></td><td>Default</td><td>SAPI voice used for synthesis. Lists all voices installed on Windows. Click ↻ to refresh. Different voices have different recognition rates with the game — experiment.</td></tr>
+    <tr><td><strong>Speech rate</strong></td><td>150 wpm</td><td>Words per minute. Lower = slower and clearer. Try 120–130 if the game misses TTS commands.</td></tr>
+    <tr><td><strong>Gap between words</strong></td><td>0.0s</td><td>Pause between individual audio files in a multi-word sequence. Positive = add silence. Negative = trim silence from end of each clip. Does not apply when a sentence is synthesised as one TTS phrase.</td></tr>
+    <tr><td><strong>Test TTS</strong></td><td>—</td><td>Triggers the word "go" through the full TTS pipeline so you can hear the current voice and rate setting.</td></tr>
+    <tr><td><strong>Reset TTS defaults</strong></td><td>—</td><td>Resets rate to 150 wpm and gap to 0.0s.</td></tr>
+  </table>
+
+  <h2>Commands Tab</h2>
+  <p>The <strong>📋 Commands</strong> tab is not part of Settings but is important for customisation:</p>
+  <table>
+    <tr><th>Section</th><th>Description</th></tr>
+    <tr><td><strong>Single-word commands</strong></td><td>All 314 built-in single words, shown in blue. Scrollable grid.</td></tr>
+    <tr><td><strong>Official phrases</strong></td><td>All 91 built-in multi-word phrases, shown in gold. Scrollable.</td></tr>
+    <tr><td><strong>Custom Commands</strong></td><td>Text box where you add your own trigger words or phrases, one per line. Multi-word lines are treated as phrases. Click Apply after editing.</td></tr>
+  </table>
+
+  <h2>config.json</h2>
+  <p>All settings are stored in <code>config.json</code> in the same folder as the bot. It is written atomically — if the app crashes mid-save, the old config is preserved and a backup is made as <code>config.json.corrupted</code>. You can inspect the file in any text editor but editing it by hand is not recommended.</p>
+
+  <div class="page-nav">
+    <a href="tts.html"><span class="nav-dir">← Previous</span><span class="nav-title">Text-to-Speech</span></a>
+    <a href="commands.html" class="next"><span class="nav-dir">Next →</span><span class="nav-title">Commands List</span></a>
+  </div>
+</main>
+</body>
+</html>

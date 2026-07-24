@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circle Button Timing — Lifeline Twitch Voice Controller</title>
+<link rel="stylesheet" href="style.css"></head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><div class="game-title">Lifeline: Operator's Side</div><div class="proj-title">Twitch Voice Controller</div></div>
+  <div class="nav-section"><div class="nav-section-label">Getting Started</div>
+    <a href="index.html">Introduction</a><a href="requirements.html">Requirements</a><a href="installation.html">Installation</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Setup Guides</div>
+    <a href="virtual-audio.html">Virtual Audio Cable <span class="badge">Required</span></a>
+    <a href="twitch.html">Twitch Connection</a><a href="controller.html">Virtual Controller</a>
+    <a href="pcsx2.html">PCSX2 Configuration</a><a href="audio-files.html">Audio Files</a><a href="tts.html">Text-to-Speech</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Using the Bot</div>
+    <a href="settings.html">Settings Reference</a><a href="commands.html">Commands List</a>
+    <a href="timing.html" class="active">Circle Button Timing</a><a href="chat-buttons.html">Chat Button Commands</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Help</div><a href="troubleshooting.html">Troubleshooting</a></div>
+</nav>
+<main class="main">
+  <div class="page-hero">
+    <div class="eyebrow">Using the Bot</div>
+    <h1>Circle Button Timing</h1>
+    <p class="lead">The most important tuning parameter. Getting this right is the difference between Rio hearing every command and Rio hearing nothing.</p>
+  </div>
+
+  <h2>The Sequence</h2>
+  <p>Lifeline requires a specific sequence to register a voice command. This is how real players use the game with a physical microphone, and the bot replicates it exactly:</p>
+
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-box press">PRESS ○</div><div class="tl-label">Circle held</div></div>
+    <div class="tl-arrow">→</div>
+    <div class="tl-item"><div class="tl-box pause">0.50s pause</div><div class="tl-label">game starts listening</div></div>
+    <div class="tl-arrow">→</div>
+    <div class="tl-item"><div class="tl-box audio">AUDIO plays</div><div class="tl-label">full duration</div></div>
+    <div class="tl-arrow">→</div>
+    <div class="tl-item"><div class="tl-box release">RELEASE ○</div><div class="tl-label">done</div></div>
+  </div>
+
+  <p>The 0.5 second pause between pressing Circle and speaking is critical. The game's voice recognition system needs this time to initialise after Circle is pressed. Speak too soon and it misses the command entirely — even if the audio is loud and clear.</p>
+
+  <h2>The Four Timing Settings</h2>
+
+  <h3>1. Delay Before Press</h3>
+  <p>An extra wait added <em>before</em> Circle is pressed. Default is 0.0s. Leave this at zero unless you have a specific reason to delay — for example if a previous command needs more time to fully complete before the game is ready to listen again.</p>
+
+  <h3>2. Pause After Press ← the important one</h3>
+  <p>How long Circle is held before the audio starts playing. <strong>Default: 0.50s.</strong> This is the timing that community experience shows works best. If the game is not responding, this is the first thing to adjust — try 0.7s or 1.0s. If commands are registering but very slowly, you can try reducing to 0.3s.</p>
+
+  <h3>3. Hold After Audio</h3>
+  <p>Keeps Circle held for this many extra seconds after the audio finishes before releasing. Default is 0.0s. Some players find that holding Circle slightly longer after speaking helps — try 0.1s–0.2s if you're having intermittent misses.</p>
+
+  <h3>4. Pause After Release</h3>
+  <p>Dead-time between releasing Circle and the next command being allowed to start. Default is 0.0s. Increase this if rapid consecutive commands seem to confuse the game.</p>
+
+  <h2>Hold for Full Audio Duration</h2>
+  <p>When ticked (the default), Circle is held continuously from the start of the sequence until the very end of the audio file, then released. This is the correct behaviour — the game expects Circle to be held for the entire duration of speech.</p>
+  <p>When unticked, Circle is released as soon as the audio begins playing. This is mainly useful for testing and is not recommended for normal use.</p>
+
+  <h2>Multi-Word Sentences</h2>
+  <p>For sentences like <em>"go to the table"</em>, Circle is pressed <strong>once</strong> at the start and released <strong>once</strong> at the end — after all words have finished playing. Circle is never released between individual words.</p>
+
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-box press">PRESS ○</div><div class="tl-label"></div></div>
+    <div class="tl-arrow">→</div>
+    <div class="tl-item"><div class="tl-box pause">0.50s</div><div class="tl-label"></div></div>
+    <div class="tl-arrow">→</div>
+    <div class="tl-item"><div class="tl-box audio">"go"</div><div class="tl-label"></div></div>
+    <div class="tl-arrow">→</div>
+    <div class="tl-item"><div class="tl-box audio">"to the table"</div><div class="tl-label">all words</div></div>
+    <div class="tl-arrow">→</div>
+    <div class="tl-item"><div class="tl-box release">RELEASE ○</div><div class="tl-label"></div></div>
+  </div>
+
+  <h2>Live Timeline Preview</h2>
+  <p>The settings panel shows a live text preview of the full sequence as you adjust sliders:</p>
+  <pre><code>[PRESS Circle]  →  pause 0.50s  →  [AUDIO...full length]  →  [RELEASE Circle]</code></pre>
+  <p>This updates instantly when you change any value so you can see the effect before testing.</p>
+
+  <h2>Testing</h2>
+  <p>The <strong>Test Circle timing</strong> button runs through the full sequence without playing any audio. Watch PCSX2's controller input display — you should see the Circle button register for the duration of the test. The command log will show:</p>
+  <pre><code>[Test] pre=0.00s hb=0.50s ha=0.00s rd=0.00s
+● Circle HELD
+[audio would play here]
+○ Circle released
+done</code></pre>
+
+  <h2>Recommended Starting Values</h2>
+  <table>
+    <tr><th>Setting</th><th>Default</th><th>If game misses commands</th><th>If commands feel slow</th></tr>
+    <tr><td>Delay before press</td><td>0.00s</td><td>0.00s</td><td>0.00s</td></tr>
+    <tr><td><strong>Pause after press</strong></td><td><strong>0.50s</strong></td><td>0.70s – 1.00s</td><td>0.30s</td></tr>
+    <tr><td>Hold after audio</td><td>0.00s</td><td>0.10s – 0.20s</td><td>0.00s</td></tr>
+    <tr><td>Pause after release</td><td>0.00s</td><td>0.20s</td><td>0.00s</td></tr>
+    <tr><td>Full duration hold</td><td>✅ ticked</td><td>✅ ticked</td><td>✅ ticked</td></tr>
+  </table>
+
+  <div class="page-nav">
+    <a href="commands.html"><span class="nav-dir">← Previous</span><span class="nav-title">Commands List</span></a>
+    <a href="chat-buttons.html" class="next"><span class="nav-dir">Next →</span><span class="nav-title">Chat Button Commands</span></a>
+  </div>
+</main>
+</body>
+</html>

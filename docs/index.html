@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lifeline Twitch Voice Controller — Home</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="game-title">Lifeline: Operator's Side</div>
+    <div class="proj-title">Twitch Voice Controller</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-label">Getting Started</div>
+    <a href="index.html" class="active">Introduction</a>
+    <a href="requirements.html">Requirements</a>
+    <a href="installation.html">Installation</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-label">Setup Guides</div>
+    <a href="virtual-audio.html">Virtual Audio Cable <span class="badge">Required</span></a>
+    <a href="twitch.html">Twitch Connection</a>
+    <a href="controller.html">Virtual Controller</a>
+    <a href="pcsx2.html">PCSX2 Configuration</a>
+    <a href="audio-files.html">Audio Files</a>
+    <a href="tts.html">Text-to-Speech</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-label">Using the Bot</div>
+    <a href="settings.html">Settings Reference</a>
+    <a href="commands.html">Commands List</a>
+    <a href="timing.html">Circle Button Timing</a>
+    <a href="chat-buttons.html">Chat Button Commands</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-label">Help</div>
+    <a href="troubleshooting.html">Troubleshooting</a>
+  </div>
+</nav>
+
+<main class="main">
+  <div class="page-hero">
+    <div class="eyebrow">Documentation</div>
+    <h1>Lifeline Twitch<br>Voice Controller</h1>
+    <p class="lead">Let your Twitch chat crowd-play <strong>Lifeline: Operator's Side</strong> (PS2, 2003) by typing voice commands that are spoken to Rio through a virtual microphone.</p>
+  </div>
+
+  <h2>What Is This?</h2>
+  <p><strong>Lifeline: Operator's Side</strong> is a unique PS2 game from Konami (2003) that is controlled entirely by voice. You speak into a microphone and Rio — the character you are guiding through a space station disaster — hears you and responds. There are no directional stick controls for gameplay; the microphone IS the controller.</p>
+  <p>This program bridges your Twitch chat to the game. Viewers type command words or phrases, and the bot automatically:</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Detects the command</h4>
+        <p>Scans every chat message for recognised Lifeline words and phrases. Supports 314 single words and 91 official multi-word phrases from the game's FAQ.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Holds Circle on a virtual controller</h4>
+        <p>Presses and holds the Circle button on a virtual PS2 controller. In Lifeline, Circle activates the microphone — the game won't listen unless Circle is held.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Plays the audio</h4>
+        <p>After a 0.5 second pause (which the game requires before it starts listening), plays the audio file for that command — or synthesises it via text-to-speech if no file exists. The audio is routed through a virtual audio cable so it reaches the game as a microphone input.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Releases Circle</h4>
+        <p>Once the audio finishes playing, Circle is released. Rio has heard the command and will respond.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout warning">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-body">
+      <div class="callout-title">Virtual Audio Cable Is Required</div>
+      <p>This program <strong>cannot work without a virtual audio cable</strong>. The game listens for a real microphone — the virtual cable makes the bot's audio appear as microphone input to PCSX2. See the <a href="virtual-audio.html">Virtual Audio Cable setup guide</a> for full instructions.</p>
+    </div>
+  </div>
+
+  <h2>How the Microphone Mechanic Works</h2>
+  <p>Understanding this is important before you configure anything. Lifeline uses the PS2 USB Headset microphone. When you press and hold Circle, the game begins listening. You speak your command, then release Circle. The timing between pressing Circle and speaking matters — too soon and the game misses it.</p>
+
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-box press">PRESS ○</div><div class="tl-label">Circle held</div></div>
+    <div class="tl-arrow">→</div>
+    <div class="tl-item"><div class="tl-box pause">0.50s pause</div><div class="tl-label">game starts listening</div></div>
+    <div class="tl-arrow">→</div>
+    <div class="tl-item"><div class="tl-box audio">AUDIO plays</div><div class="tl-label">command spoken</div></div>
+    <div class="tl-arrow">→</div>
+    <div class="tl-item"><div class="tl-box release">RELEASE ○</div><div class="tl-label">done</div></div>
+  </div>
+
+  <p>The bot replicates this sequence exactly. The 0.5 second pause is the most important setting — it is enabled by default and works for most people. All timings are configurable in the <a href="timing.html">Circle Button Timing</a> page.</p>
+
+  <h2>Key Features</h2>
+  <table>
+    <tr><th>Feature</th><th>Details</th></tr>
+    <tr><td><strong>Virtual microphone</strong></td><td>Routes audio through VB-Cable as a real microphone input — no physical mic needed</td></tr>
+    <tr><td><strong>Virtual PS2 controller</strong></td><td>Holds Circle automatically during every voice command via ViGEmBus/vgamepad</td></tr>
+    <tr><td><strong>Twitch IRC integration</strong></td><td>Connects to any Twitch channel, low-latency TCP_NODELAY socket with 8KB receive buffer</td></tr>
+    <tr><td><strong>314 words + 91 phrases</strong></td><td>Full command list from the Lifeline FAQ, with two-pass phrase matching</td></tr>
+    <tr><td><strong>Multi-word sentences</strong></td><td>"go to the table" holds Circle for the whole phrase spoken as one</td></tr>
+    <tr><td><strong>Repeat commands</strong></td><td>"hello,hello,hello" says hello three times with Circle held throughout</td></tr>
+    <tr><td><strong>TTS fallback</strong></td><td>Words with no audio file are synthesised via pyttsx3 — no silence</td></tr>
+    <tr><td><strong>Audio files</strong></td><td>Your own recorded voice clips can be used for any command word</td></tr>
+    <tr><td><strong>Chat button commands</strong></td><td>Type "map" to press L1, "pause" for Start — for menu navigation, no Circle hold</td></tr>
+    <tr><td><strong>Word filter</strong></td><td>Blocks slurs and explicit content from ever reaching TTS</td></tr>
+    <tr><td><strong>Persistent settings</strong></td><td>Everything saves to config.json — restores on next launch</td></tr>
+  </table>
+
+  <h2>Quick Start</h2>
+  <p>If you just want to get running as fast as possible:</p>
+  <ol>
+    <li>Install <a href="https://vb-audio.com/Cable" target="_blank">VB-Cable</a> and reboot</li>
+    <li>Install <a href="https://github.com/nefarius/ViGEmBus/releases" target="_blank">ViGEmBus</a> and reboot</li>
+    <li>Run <code>pip install -r requirements.txt</code></li>
+    <li>Run <code>python lifeline_bot.py</code> (or double-click <code>run.bat</code>)</li>
+    <li>In Settings: enter your Twitch channel + OAuth token, set Output device to "CABLE Input", enable the virtual controller</li>
+    <li>In PCSX2: set Microphone input to "CABLE Output", assign the virtual controller to Player 1</li>
+    <li>Click Connect and test with a word like <code>yes</code></li>
+  </ol>
+  <p>For the full step-by-step with screenshots and explanations, start with the <a href="requirements.html">Requirements</a> page.</p>
+
+  <div class="page-nav">
+    <div></div>
+    <a href="requirements.html" class="next">
+      <span class="nav-dir">Next →</span>
+      <span class="nav-title">Requirements</span>
+    </a>
+  </div>
+</main>
+</body>
+</html>

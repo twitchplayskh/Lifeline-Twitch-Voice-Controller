@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Requirements — Lifeline Twitch Voice Controller</title>
+<link rel="stylesheet" href="style.css"></head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><div class="game-title">Lifeline: Operator's Side</div><div class="proj-title">Twitch Voice Controller</div></div>
+  <div class="nav-section"><div class="nav-section-label">Getting Started</div>
+    <a href="index.html">Introduction</a>
+    <a href="requirements.html" class="active">Requirements</a>
+    <a href="installation.html">Installation</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Setup Guides</div>
+    <a href="virtual-audio.html">Virtual Audio Cable <span class="badge">Required</span></a>
+    <a href="twitch.html">Twitch Connection</a>
+    <a href="controller.html">Virtual Controller</a>
+    <a href="pcsx2.html">PCSX2 Configuration</a>
+    <a href="audio-files.html">Audio Files</a>
+    <a href="tts.html">Text-to-Speech</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Using the Bot</div>
+    <a href="settings.html">Settings Reference</a>
+    <a href="commands.html">Commands List</a>
+    <a href="timing.html">Circle Button Timing</a>
+    <a href="chat-buttons.html">Chat Button Commands</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Help</div><a href="troubleshooting.html">Troubleshooting</a></div>
+</nav>
+<main class="main">
+  <div class="page-hero">
+    <div class="eyebrow">Getting Started</div>
+    <h1>Requirements</h1>
+    <p class="lead">Everything you need to install before the bot will work — and why each piece matters.</p>
+  </div>
+
+  <div class="callout danger">
+    <div class="callout-icon">🛑</div>
+    <div class="callout-body">
+      <div class="callout-title">Install in order and reboot when told</div>
+      <p>VB-Cable and ViGEmBus both install kernel-level Windows drivers. If you skip the reboots, the drivers will not be active and the bot will fail silently in ways that are difficult to debug.</p>
+    </div>
+  </div>
+
+  <h2>Required Software</h2>
+
+  <h3>1. Python 3.8 or newer</h3>
+  <p>The bot is written in Python. If you do not have Python installed:</p>
+  <ol>
+    <li>Go to <a href="https://python.org/downloads" target="_blank">python.org/downloads</a></li>
+    <li>Download the latest 3.x release for Windows</li>
+    <li>Run the installer — <strong>on the first screen, tick "Add Python to PATH"</strong> before clicking Install Now</li>
+    <li>To verify, open Command Prompt and type <code>python --version</code></li>
+  </ol>
+  <div class="callout info">
+    <div class="callout-icon">ℹ️</div>
+    <div class="callout-body"><p>If you already have Python but the <code>python</code> command doesn't work, try <code>python3</code> instead. If neither works, Python is not on your PATH — reinstall and tick the "Add to PATH" checkbox.</p></div>
+  </div>
+
+  <h3>2. VB-Cable — Virtual Audio Cable</h3>
+  <p><strong>This is the most important dependency.</strong> The game listens for a real microphone. VB-Cable creates a virtual audio device that lets the bot's audio output appear as a microphone to PCSX2 and the game.</p>
+  <p>Without this, the game will never hear anything the bot plays.</p>
+  <ul>
+    <li>Download from <a href="https://vb-audio.com/Cable" target="_blank">vb-audio.com/Cable</a> — it is free (donation-ware)</li>
+    <li>Run <strong>VBCABLE_Setup_x64.exe</strong> as Administrator (right-click → Run as administrator)</li>
+    <li><strong>Reboot your PC</strong> after installation</li>
+  </ul>
+  <p>After rebooting you should see two new audio devices in Windows Sound settings: <em>CABLE Input</em> and <em>CABLE Output</em>. See the <a href="virtual-audio.html">Virtual Audio Cable</a> page for the full routing setup.</p>
+
+  <h3>3. ViGEmBus Driver</h3>
+  <p>This is a Windows driver that lets software create virtual Xbox 360 and DualShock 4 controllers. The bot uses it to hold the Circle button during voice commands.</p>
+  <ul>
+    <li>Go to <a href="https://github.com/nefarius/ViGEmBus/releases" target="_blank">github.com/nefarius/ViGEmBus/releases</a></li>
+    <li>Download the latest <strong>ViGEmBus_Setup_x64.exe</strong></li>
+    <li>Run the installer</li>
+    <li><strong>Reboot your PC</strong> after installation</li>
+  </ul>
+
+  <h3>4. PCSX2 — PS2 Emulator</h3>
+  <p>You need a PS2 emulator to run Lifeline. PCSX2 is the standard choice.</p>
+  <ul>
+    <li>Download from <a href="https://pcsx2.net/downloads" target="_blank">pcsx2.net/downloads</a></li>
+    <li>The <strong>nightly build</strong> (Qt version) is recommended for best compatibility</li>
+    <li>You will also need a PS2 BIOS file — this comes from your own PS2 console</li>
+  </ul>
+
+  <h3>5. Lifeline: Operator's Side</h3>
+  <p>You need your own copy of the game. It was released in Japan as <em>Operator's Side</em> and in North America as <em>Lifeline</em>. Both versions work. Create an ISO from your own disc.</p>
+
+  <h2>Python Dependencies</h2>
+  <p>These are installed automatically when you run <code>pip install -r requirements.txt</code> (or double-click <code>run.bat</code>):</p>
+  <table>
+    <tr><th>Package</th><th>Purpose</th><th>Notes</th></tr>
+    <tr><td><code>sounddevice</code></td><td>Plays audio through the selected output device</td><td>Routes to VB-Cable</td></tr>
+    <tr><td><code>soundfile</code></td><td>Reads .wav, .mp3, .ogg, .flac, .aiff files</td><td></td></tr>
+    <tr><td><code>numpy</code></td><td>Resamples audio to match device's native sample rate</td><td>Prevents "Invalid sample rate" errors</td></tr>
+    <tr><td><code>vgamepad</code></td><td>Creates virtual DS4/Xbox controller, presses Circle</td><td>Requires ViGEmBus driver</td></tr>
+    <tr><td><code>pyttsx3</code></td><td>Text-to-speech synthesis</td><td>Uses Windows SAPI voices</td></tr>
+    <tr><td><code>better-profanity</code></td><td>Filters explicit words before TTS</td><td>Optional but recommended</td></tr>
+  </table>
+
+  <h2>Hardware</h2>
+  <p>No special hardware is required. The bot uses entirely virtual devices — no physical microphone, no physical PS2 controller.</p>
+  <p>If you are streaming, your own microphone for commentary goes through your normal audio setup and is completely separate from the virtual cable used by the bot.</p>
+
+  <div class="page-nav">
+    <a href="index.html"><span class="nav-dir">← Previous</span><span class="nav-title">Introduction</span></a>
+    <a href="installation.html" class="next"><span class="nav-dir">Next →</span><span class="nav-title">Installation</span></a>
+  </div>
+</main>
+</body>
+</html>

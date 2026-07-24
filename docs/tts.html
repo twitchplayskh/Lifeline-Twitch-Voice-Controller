@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Text-to-Speech — Lifeline Twitch Voice Controller</title>
+<link rel="stylesheet" href="style.css"></head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><div class="game-title">Lifeline: Operator's Side</div><div class="proj-title">Twitch Voice Controller</div></div>
+  <div class="nav-section"><div class="nav-section-label">Getting Started</div>
+    <a href="index.html">Introduction</a><a href="requirements.html">Requirements</a><a href="installation.html">Installation</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Setup Guides</div>
+    <a href="virtual-audio.html">Virtual Audio Cable <span class="badge">Required</span></a>
+    <a href="twitch.html">Twitch Connection</a><a href="controller.html">Virtual Controller</a>
+    <a href="pcsx2.html">PCSX2 Configuration</a><a href="audio-files.html">Audio Files</a><a href="tts.html" class="active">Text-to-Speech</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Using the Bot</div>
+    <a href="settings.html">Settings Reference</a><a href="commands.html">Commands List</a>
+    <a href="timing.html">Circle Button Timing</a><a href="chat-buttons.html">Chat Button Commands</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Help</div><a href="troubleshooting.html">Troubleshooting</a></div>
+</nav>
+<main class="main">
+  <div class="page-hero">
+    <div class="eyebrow">Setup Guides</div>
+    <h1>Text-to-Speech</h1>
+    <p class="lead">How TTS synthesis works, how to configure it, and how multi-word sentences are handled.</p>
+  </div>
+
+  <h2>How TTS Works</h2>
+  <p>When a command is triggered and no audio file exists for it, the bot synthesises the word or phrase using <strong>pyttsx3</strong> — a Python text-to-speech library that uses Windows' built-in SAPI voices. The synthesised audio is saved to a cache file and played through the virtual audio cable just like a regular audio file.</p>
+  <p>The cache means that a phrase only needs to be synthesised once — repeated triggers of the same word play the cached file instantly with no synthesis delay.</p>
+
+  <h2>Single Words vs Sentences</h2>
+  <p>The bot handles single words and multi-word sentences differently for best results:</p>
+  <table>
+    <tr><th>Scenario</th><th>What happens</th></tr>
+    <tr><td>Single word, audio file exists</td><td>Plays the audio file</td></tr>
+    <tr><td>Single word, no audio file</td><td>Synthesises the word via TTS</td></tr>
+    <tr><td>Multi-word, all words have files</td><td>Plays each file in sequence, Circle held throughout</td></tr>
+    <tr><td>Multi-word, any word is missing a file</td><td>Synthesises the <strong>entire sentence as one phrase</strong> — sounds natural rather than word-by-word robotic</td></tr>
+    <tr><td>Multi-word, Always use TTS ticked</td><td>Synthesises the entire sentence regardless of files</td></tr>
+  </table>
+  <div class="callout info">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body"><p>Synthesising a full sentence like <em>"go to the table"</em> as one TTS phrase produces far more natural-sounding speech than synthesising each word individually. The game's voice recognition handles flowing speech better than robotic individual words.</p></div>
+  </div>
+
+  <h2>TTS Settings</h2>
+  <h3>Enable TTS</h3>
+  <p>When ticked, any command word or phrase that does not have an audio file is synthesised via TTS. If unticked and no audio file exists, the command is silently skipped.</p>
+  <h3>Always Use TTS</h3>
+  <p>Ignores all audio files and synthesises everything. Useful for testing, or if you prefer a consistent TTS voice over a mix of recorded and synthesised audio.</p>
+  <h3>Filter Hateful / Explicit Words</h3>
+  <p>Keeps this ticked. Words on the blocklist are never passed to TTS regardless of any other setting. Chat button trigger words are also automatically excluded from TTS — if you assign "confirm" to Square, typing "confirm" will press Square but will not also be spoken.</p>
+  <h3>TTS Voice</h3>
+  <p>Lists all SAPI voices installed on your Windows system. Click the refresh button (↻) to repopulate the list. Different voices have very different recognition rates with the game — experiment to find what works best. Microsoft Zira and Microsoft David are common Windows defaults.</p>
+  <h3>Speech Rate</h3>
+  <p>Words per minute. Default is 150. Lower values (120–130) produce slower, more deliberate speech that the game may recognise more reliably. Very high values (200+) can cause words to blur together.</p>
+  <h3>Gap Between Words</h3>
+  <p>Controls the pause between individual words when playing multiple audio files in sequence. This does not apply when the whole sentence is synthesised as one TTS phrase.</p>
+  <ul>
+    <li><strong>Positive value</strong> — inserts a silent pause of that many seconds between words</li>
+    <li><strong>Zero</strong> — words play back-to-back with no gap</li>
+    <li><strong>Negative value</strong> — trims that many seconds of silence off the end of each audio clip before the next word begins. Useful when your audio files have trailing silence that makes the sentence feel slow.</li>
+  </ul>
+
+  <h2>Improving Recognition</h2>
+  <p>If the game consistently ignores TTS commands, try these in order:</p>
+  <ol>
+    <li>Lower the speech rate to 120–130 wpm</li>
+    <li>Try a different TTS voice — some voices are clearer to the game's recognition system</li>
+    <li>Increase the microphone volume in PCSX2's audio settings</li>
+    <li>Increase the "Pause after press" timing to 0.7s or 1.0s — the game may need more time to start listening</li>
+    <li>Record your own voice clips for the most frequently used commands — human speech works better than TTS</li>
+  </ol>
+
+  <div class="page-nav">
+    <a href="audio-files.html"><span class="nav-dir">← Previous</span><span class="nav-title">Audio Files</span></a>
+    <a href="settings.html" class="next"><span class="nav-dir">Next →</span><span class="nav-title">Settings Reference</span></a>
+  </div>
+</main>
+</body>
+</html>

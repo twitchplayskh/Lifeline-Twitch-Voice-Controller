@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commands List — Lifeline Twitch Voice Controller</title>
+<link rel="stylesheet" href="style.css"></head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><div class="game-title">Lifeline: Operator's Side</div><div class="proj-title">Twitch Voice Controller</div></div>
+  <div class="nav-section"><div class="nav-section-label">Getting Started</div>
+    <a href="index.html">Introduction</a><a href="requirements.html">Requirements</a><a href="installation.html">Installation</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Setup Guides</div>
+    <a href="virtual-audio.html">Virtual Audio Cable <span class="badge">Required</span></a>
+    <a href="twitch.html">Twitch Connection</a><a href="controller.html">Virtual Controller</a>
+    <a href="pcsx2.html">PCSX2 Configuration</a><a href="audio-files.html">Audio Files</a><a href="tts.html">Text-to-Speech</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Using the Bot</div>
+    <a href="settings.html">Settings Reference</a><a href="commands.html" class="active">Commands List</a>
+    <a href="timing.html">Circle Button Timing</a><a href="chat-buttons.html">Chat Button Commands</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Help</div><a href="troubleshooting.html">Troubleshooting</a></div>
+</nav>
+<main class="main">
+  <div class="page-hero">
+    <div class="eyebrow">Using the Bot</div>
+    <h1>Commands List</h1>
+    <p class="lead">Every word and phrase the bot recognises from Twitch chat. Type any of these to send a voice command to the game.</p>
+  </div>
+
+  <div class="callout info">
+    <div class="callout-icon">ℹ️</div>
+    <div class="callout-body"><p>Commands are case-insensitive. <code>GO</code>, <code>Go</code> and <code>go</code> all work. Phrases must match exactly — <code>go back</code> works, <code>going back</code> does not.</p></div>
+  </div>
+
+  <h2>How Matching Works</h2>
+  <p>The bot uses two-pass matching on every chat message:</p>
+  <ol>
+    <li><strong>Phrase scan first</strong> — scans for the longest matching multi-word phrase. <code>go back</code> fires as one phrase, not as separate <code>go</code> and <code>back</code> commands.</li>
+    <li><strong>Word scan second</strong> — on the remaining text not claimed by a phrase, picks up individual command words.</li>
+  </ol>
+  <p>This means a message like <code>go back and check the door</code> fires: <em>go back</em> (phrase) + <em>check</em> (word) + <em>door</em> (word).</p>
+
+  <h2>Normal Keywords</h2>
+  <div class="tag-grid">
+    <span class="tag">walk</span><span class="tag">run</span><span class="tag">stop</span><span class="tag">go back</span><span class="tag">check</span>
+  </div>
+
+  <h2>Movement &amp; Navigation — Single Words</h2>
+  <div class="tag-grid">
+    <span class="tag">go</span><span class="tag">move</span><span class="tag">walk</span><span class="tag">run</span><span class="tag">follow</span><span class="tag">come</span><span class="tag">here</span><span class="tag">back</span><span class="tag">left</span><span class="tag">right</span><span class="tag">forward</span><span class="tag">ahead</span><span class="tag">behind</span><span class="tag">north</span><span class="tag">south</span><span class="tag">east</span><span class="tag">west</span><span class="tag">up</span><span class="tag">down</span><span class="tag">stop</span><span class="tag">wait</span><span class="tag">stay</span><span class="tag">return</span><span class="tag">approach</span><span class="tag">enter</span><span class="tag">exit</span><span class="tag">front</span>
+  </div>
+
+  <h2>Actions — Single Words</h2>
+  <div class="tag-grid">
+    <span class="tag">get</span><span class="tag">take</span><span class="tag">grab</span><span class="tag">pick</span><span class="tag">drop</span><span class="tag">use</span><span class="tag">open</span><span class="tag">close</span><span class="tag">push</span><span class="tag">pull</span><span class="tag">hit</span><span class="tag">attack</span><span class="tag">fight</span><span class="tag">kick</span><span class="tag">dodge</span><span class="tag">hide</span><span class="tag">crouch</span><span class="tag">stand</span><span class="tag">look</span><span class="tag">examine</span><span class="tag">search</span><span class="tag">check</span><span class="tag">read</span><span class="tag">give</span><span class="tag">throw</span><span class="tag">put</span><span class="tag">place</span><span class="tag">carry</span><span class="tag">hold</span><span class="tag">release</span><span class="tag">eat</span><span class="tag">drink</span><span class="tag">heal</span><span class="tag">rest</span><span class="tag">climb</span><span class="tag">jump</span><span class="tag">duck</span><span class="tag">turn</span><span class="tag">shoot</span><span class="tag">fire</span><span class="tag">reload</span><span class="tag">aim</span><span class="tag">flee</span><span class="tag">recover</span><span class="tag">unlock</span><span class="tag">break</span><span class="tag">press</span>
+  </div>
+
+  <h2>Communication — Single Words</h2>
+  <div class="tag-grid">
+    <span class="tag">yes</span><span class="tag">no</span><span class="tag">okay</span><span class="tag">ok</span><span class="tag">help</span><span class="tag">call</span><span class="tag">talk</span><span class="tag">say</span><span class="tag">speak</span><span class="tag">answer</span><span class="tag">thanks</span><span class="tag">sorry</span><span class="tag">please</span><span class="tag">hurry</span><span class="tag">careful</span>
+  </div>
+
+  <h2>Special Commands — Full Phrases</h2>
+  <div class="tag-grid">
+    <span class="tag green">consultation</span><span class="tag green">microphone check</span><span class="tag green">zoom in</span><span class="tag green">low kick</span><span class="tag green">category game</span><span class="tag green">spin the gun</span><span class="tag green">taunt</span><span class="tag green">sexy pose</span><span class="tag green">auto-fire</span><span class="tag green">she sells</span><span class="tag green">strafe</span><span class="tag green">break time</span><span class="tag green">jump</span><span class="tag green">i'll leave it to you</span><span class="tag green">camera check</span><span class="tag green">jumpback</span>
+  </div>
+
+  <h2>Battle Commands</h2>
+  <div class="tag-grid">
+    <span class="tag amber">shoot</span><span class="tag amber">reload</span><span class="tag amber">flee</span><span class="tag amber">approach</span><span class="tag amber">recover</span><span class="tag amber">dodge</span><span class="tag amber">front</span><span class="tag amber">back</span><span class="tag amber">number 1</span><span class="tag amber">number 2</span><span class="tag amber">number 3</span><span class="tag amber">turn right</span><span class="tag amber">turn left</span>
+  </div>
+  <div class="callout info">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body"><p>Battle commands can be stacked. Chat can type <code>shoot shoot shoot</code> to fire three times, or <code>shoot flee recover</code> to chain three actions.</p></div>
+  </div>
+
+  <h2>Scenario Questions — Full Phrases</h2>
+  <p>Say the complete phrase in chat to ask Rio one of her conversation topics. Type it exactly as shown.</p>
+  <div class="tag-grid">
+    <span class="tag">what should we do</span><span class="tag">where am i</span><span class="tag">who's naomi</span><span class="tag">what is jsl</span><span class="tag">what are you looking for</span><span class="tag">what was that monster</span><span class="tag">who is helen johnson</span><span class="tag">why are you so cranky</span><span class="tag">i wonder if naomi's alive</span><span class="tag">what is the manager like</span><span class="tag">what do you think of the pm</span><span class="tag">do you have any friends</span><span class="tag">what's the relationship with gino</span><span class="tag">is a rescue team coming</span><span class="tag">how are things on earth</span><span class="tag">naomi isn't around</span><span class="tag">what are they researching here</span><span class="tag">what do you think of allen</span><span class="tag">where is the announcer</span><span class="tag">tell me about yourself</span><span class="tag">tell me what you're looking for</span><span class="tag">powers and alien</span><span class="tag">what do you think of powers</span><span class="tag">how far away are you</span><span class="tag">naomi wasn't there</span><span class="tag">about this hotel's structure</span><span class="tag">humanoid alien</span><span class="tag">i wonder if the pm and his people are ok</span><span class="tag">what do you think of that captain</span><span class="tag">that alien earlier</span><span class="tag">you've got great reflexes</span><span class="tag">i wonder if naomi is safe</span><span class="tag">you're looking for a green orb</span><span class="tag">i wonder if the manager is ok</span><span class="tag">where is gino</span><span class="tag">the announcer was dead</span><span class="tag">that man in the restaurant</span><span class="tag">when we get to earth</span><span class="tag">how was earth</span><span class="tag">is this hotel ok</span><span class="tag">why did tanaka turn into a monster</span><span class="tag">the poor manager</span><span class="tag">what happened to powers</span><span class="tag">i wonder if gino is ok</span><span class="tag">what is paracelsus</span><span class="tag">the remnants of paracelsus</span><span class="tag">the power of words</span><span class="tag">are you close to me now</span><span class="tag">is it zero gravity</span><span class="tag">what's a philosopher's stone</span><span class="tag">the first lady was attacked by an alien</span><span class="tag">that allen</span><span class="tag">what happened to gino</span><span class="tag">what was that group</span><span class="tag">where is naomi</span><span class="tag">the monsters were made here</span><span class="tag">allen was conducting research here</span><span class="tag">you're strong</span><span class="tag">it's about naomi</span><span class="tag">what's a fake stone</span><span class="tag">powers is joseph</span><span class="tag">why were you in the detaining cell</span>
+  </div>
+
+  <h2>Fun Easter Eggs</h2>
+  <p>These trigger amusing responses from Rio but are not gameplay-critical.</p>
+  <div class="tag-grid">
+    <span class="tag purple">i love you</span><span class="tag purple">i hate you</span><span class="tag purple">i'm sorry</span><span class="tag purple">are you a girl</span><span class="tag purple">bark like a dog</span><span class="tag purple">what's your sign</span><span class="tag purple">sit down</span><span class="tag purple">this game sucks</span><span class="tag purple">kill yourself</span><span class="tag purple">suicide</span><span class="tag purple">fuck you</span><span class="tag purple">take off your clothes</span><span class="tag purple">will you have sex with me</span>
+  </div>
+
+  <h2>Adding Custom Commands</h2>
+  <p>Go to the <strong>📋 Commands</strong> tab in the app and scroll to <strong>Custom Commands</strong>. Type one word or phrase per line and click <strong>✅ Apply Custom Commands</strong>.</p>
+  <ul>
+    <li>Single words — added to the word list, matched individually</li>
+    <li>Multi-word entries — treated as phrases, matched as a unit</li>
+    <li>You can then create audio files with the same name, or TTS will handle them automatically</li>
+  </ul>
+
+  <div class="page-nav">
+    <a href="settings.html"><span class="nav-dir">← Previous</span><span class="nav-title">Settings Reference</span></a>
+    <a href="timing.html" class="next"><span class="nav-dir">Next →</span><span class="nav-title">Circle Button Timing</span></a>
+  </div>
+</main>
+</body>
+</html>

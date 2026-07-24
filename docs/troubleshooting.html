@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Troubleshooting — Lifeline Twitch Voice Controller</title>
+<link rel="stylesheet" href="style.css"></head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><div class="game-title">Lifeline: Operator's Side</div><div class="proj-title">Twitch Voice Controller</div></div>
+  <div class="nav-section"><div class="nav-section-label">Getting Started</div>
+    <a href="index.html">Introduction</a><a href="requirements.html">Requirements</a><a href="installation.html">Installation</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Setup Guides</div>
+    <a href="virtual-audio.html">Virtual Audio Cable <span class="badge">Required</span></a>
+    <a href="twitch.html">Twitch Connection</a><a href="controller.html">Virtual Controller</a>
+    <a href="pcsx2.html">PCSX2 Configuration</a><a href="audio-files.html">Audio Files</a><a href="tts.html">Text-to-Speech</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Using the Bot</div>
+    <a href="settings.html">Settings Reference</a><a href="commands.html">Commands List</a>
+    <a href="timing.html">Circle Button Timing</a><a href="chat-buttons.html">Chat Button Commands</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Help</div><a href="troubleshooting.html" class="active">Troubleshooting</a></div>
+</nav>
+<main class="main">
+  <div class="page-hero">
+    <div class="eyebrow">Help</div>
+    <h1>Troubleshooting</h1>
+    <p class="lead">Solutions for the most common problems, organised by symptom.</p>
+  </div>
+
+  <div class="callout info">
+    <div class="callout-icon">🔍</div>
+    <div class="callout-body"><p>The <strong>🎮 Live Feed</strong> tab is your best debugging tool. The left panel shows every chat message with command words highlighted in gold. The right panel shows every action the bot takes — Circle press, audio played, Circle release, errors. If something is not working, check what the right panel says (or does not say).</p></div>
+  </div>
+
+  <h2>Installation Problems</h2>
+
+  <h3>pip is not recognised / Python not found</h3>
+  <p>Python is not on your PATH. Re-run the Python installer from <a href="https://python.org" target="_blank">python.org</a> and on the first screen make sure <strong>"Add Python to PATH"</strong> is ticked before clicking Install Now. Then open a new Command Prompt window and try again.</p>
+
+  <h3>pip install fails with "Access Denied"</h3>
+  <p>Try running the Command Prompt as Administrator (right-click → Run as administrator), or add <code>--user</code> to the install command:</p>
+  <pre><code>pip install -r requirements.txt --user</code></pre>
+
+  <h3>vgamepad fails to install</h3>
+  <p>Make sure ViGEmBus is installed first. vgamepad requires the driver to be present at install time. Download ViGEmBus from <a href="https://github.com/nefarius/ViGEmBus/releases" target="_blank">github.com/nefarius/ViGEmBus/releases</a>, install it, reboot, then try pip install again.</p>
+
+  <hr style="border-color:var(--border);margin:32px 0;">
+
+  <h2>Connection Problems</h2>
+
+  <h3>Bot shows "Failed to connect" or stays at "Connecting…"</h3>
+  <ul>
+    <li>Check your OAuth token — copy it again from <a href="https://twitchapps.com/tmi/" target="_blank">twitchapps.com/tmi</a>. The token must include the <code>oauth:</code> prefix.</li>
+    <li>Check your channel name has no <code>#</code> and is spelled correctly.</li>
+    <li>Check your internet connection.</li>
+    <li>Twitch IRC occasionally has outages — check <a href="https://status.twitch.tv" target="_blank">status.twitch.tv</a>.</li>
+  </ul>
+
+  <h3>Bot connects but chat messages don't appear</h3>
+  <p>The bot has joined the channel but is not reading messages. This can happen if the OAuth token has expired or been revoked. Generate a fresh token and save it in settings.</p>
+
+  <hr style="border-color:var(--border);margin:32px 0;">
+
+  <h2>Audio Problems</h2>
+
+  <h3>CABLE Input does not appear in the output device list</h3>
+  <p>VB-Cable is either not installed or you have not rebooted since installing. Install VB-Cable from <a href="https://vb-audio.com/Cable" target="_blank">vb-audio.com/Cable</a> as Administrator and reboot. If it still does not appear, click the <strong>↻ Refresh devices</strong> button.</p>
+
+  <h3>Commands fire (shown in log) but no audio plays</h3>
+  <ul>
+    <li>The output device may be set to Default instead of CABLE Input. Check Settings → Audio → Output device.</li>
+    <li>The volume may be at zero. Check Settings → Playback → Volume.</li>
+    <li>If using audio files, make sure the files exist and are named correctly. The log will show <code>! word (no_file)</code> if no file was found.</li>
+    <li>If using TTS, check that pyttsx3 is installed: <code>pip install pyttsx3</code>.</li>
+  </ul>
+
+  <h3>Audio plays through my speakers instead of the virtual cable</h3>
+  <p>The output device in Settings is set to your speakers/headphones instead of CABLE Input. Go to Settings → Audio → Output device and select <strong>CABLE Input (VB-Audio Virtual Cable)</strong>.</p>
+
+  <h3>TTS shows "tts_failed" in the log</h3>
+  <p>pyttsx3 failed to synthesise audio. This happens most commonly because the pyttsx3 engine's internal COM state gets corrupted. The bot reinitialises the engine on each synthesis call to work around this, but occasional failures can still happen. The next trigger of the same command will usually succeed. If it consistently fails:</p>
+  <ul>
+    <li>Run <code>pip install --upgrade pyttsx3</code></li>
+    <li>Restart the bot</li>
+    <li>Try a different TTS voice in Settings → TTS → Voice</li>
+  </ul>
+
+  <hr style="border-color:var(--border);margin:32px 0;">
+
+  <h2>Game Not Responding to Commands</h2>
+  <p>This is the most common issue and usually has one of four causes. Work through these in order:</p>
+
+  <h3>1. Audio is not reaching PCSX2</h3>
+  <p>The virtual audio routing is broken. Test it:</p>
+  <ol>
+    <li>In PCSX2, go to Settings → Audio and look for a microphone level meter</li>
+    <li>Type a command in Twitch chat</li>
+    <li>The meter should spike when the bot plays audio</li>
+  </ol>
+  <p>If it does not spike: confirm the bot's output device is CABLE Input, and PCSX2's microphone input is CABLE Output. Both must be set correctly.</p>
+
+  <h3>2. Circle is not being pressed</h3>
+  <p>The virtual controller is not working. Test it:</p>
+  <ol>
+    <li>In PCSX2, go to Settings → Controllers and open the controller test</li>
+    <li>Click <strong>Test Circle timing</strong> in the bot's settings</li>
+    <li>The Circle button indicator should light up in PCSX2 during the test</li>
+  </ol>
+  <p>If it does not: make sure the virtual controller is enabled in the bot, ViGEmBus is installed, and you have rebooted since installing. Try switching between DS4 and Xbox 360 mode. Make sure the virtual controller is assigned to Player 1 in PCSX2.</p>
+
+  <h3>3. The timing is wrong</h3>
+  <p>The most likely cause once audio and controller are confirmed working. The game needs Circle to be held, then a pause, then the command is spoken. If the pause is too short, the game misses it.</p>
+  <ul>
+    <li>Increase <strong>Pause after press</strong> from 0.50s to 0.70s or 1.00s</li>
+    <li>Make sure <strong>Hold for full audio duration</strong> is ticked</li>
+    <li>Try adding 0.10s to <strong>Hold after audio</strong></li>
+  </ul>
+  <p>See <a href="timing.html">Circle Button Timing</a> for the full guide.</p>
+
+  <h3>4. The USB Headset is not emulated in PCSX2</h3>
+  <p>Lifeline requires the PS2 USB Headset device. In PCSX2, go to Settings → USB and set Port 1 to Headset/PS2 Mic with CABLE Output as the audio source. Without this, the game will not have a microphone to listen to at all, regardless of whether audio is flowing through the cable.</p>
+
+  <h3>TTS voice not recognised by the game</h3>
+  <p>The game's voice recognition was tuned for human speech, not synthetic TTS voices. Some TTS voices work much better than others. If recognition is poor:</p>
+  <ul>
+    <li>Try a different voice — in Settings → TTS → Voice. Microsoft voices (Zira, David, Hazel) tend to work reasonably well.</li>
+    <li>Lower the speech rate to 120–130 wpm for clearer articulation</li>
+    <li>Record your own voice clips for the most-used commands — see <a href="audio-files.html">Audio Files</a></li>
+    <li>Increase microphone volume in PCSX2's audio settings</li>
+  </ul>
+
+  <hr style="border-color:var(--border);margin:32px 0;">
+
+  <h2>Controller Problems</h2>
+
+  <h3>"Virtual controller could not be created" error</h3>
+  <ul>
+    <li>ViGEmBus is not installed, or you have not rebooted after installing it</li>
+    <li>Try switching between DS4 and Xbox 360 mode in the settings</li>
+    <li>Run the bot as Administrator (right-click → Run as administrator)</li>
+  </ul>
+
+  <h3>Chat button commands are not working</h3>
+  <ul>
+    <li>Make sure the virtual controller is enabled (tick the Enable checkbox)</li>
+    <li>Make sure the specific button row has its <strong>On</strong> checkbox ticked</li>
+    <li>The trigger word must match exactly — it is whole-word matched against the message</li>
+    <li>Save your settings after making changes</li>
+    <li>Check the command log — if the bot detects the trigger word it logs <em>▶ L1 pressed</em>. If nothing appears, the word is not being detected.</li>
+  </ul>
+
+  <h3>Chat button settings reset after restart</h3>
+  <p>You changed settings but did not click <strong>💾 Save Settings</strong> before closing the bot. Settings are only persisted when you explicitly save.</p>
+
+  <hr style="border-color:var(--border);margin:32px 0;">
+
+  <h2>Performance Issues</h2>
+
+  <h3>There is a noticeable delay between chat typing and audio playing</h3>
+  <p>Some delay is unavoidable — Twitch IRC has inherent latency, and TTS synthesis adds more. To minimise it:</p>
+  <ul>
+    <li>Use audio files for common commands instead of TTS — files play instantly after the first load, while TTS takes 200–500ms to synthesise</li>
+    <li>The TTS cache means repeated words play from cache after the first synthesis — so delay reduces after the first use of each word</li>
+    <li>The bot uses TCP_NODELAY on its IRC socket to remove Nagle algorithm buffering</li>
+  </ul>
+
+  <h3>Commands queue up and play one after another with a long delay</h3>
+  <p>The playback worker serialises all commands — only one plays at a time. If chat is very active, commands can queue up. Increase the cooldown in Settings → Playback → Command cooldown to reduce how quickly the queue fills.</p>
+
+  <hr style="border-color:var(--border);margin:32px 0;">
+
+  <h2>Miscellaneous</h2>
+
+  <h3>config.json is corrupted and the bot won't load settings</h3>
+  <p>If the config file gets corrupted (e.g. power cut during save), the bot backs it up as <code>config.json.corrupted</code> and falls back to defaults. Delete <code>config.json</code> and reconfigure from scratch, or restore from the backup if it is readable.</p>
+
+  <h3>The bot window opens but nothing happens when I type in chat</h3>
+  <p>Check you are connected — the Live Feed tab should show <em>⬤ Live</em> in green. If it shows <em>⬤ Offline</em>, click Connect. If connection fails, see the Connection Problems section above.</p>
+
+  <h3>Scrolling in the Settings or Commands tab scrolls both tabs at once</h3>
+  <p>Move your mouse cursor fully inside the panel you want to scroll before using the mouse wheel. Scrolling is bound to whichever panel the mouse is hovering over.</p>
+
+  <div class="page-nav">
+    <a href="chat-buttons.html"><span class="nav-dir">← Previous</span><span class="nav-title">Chat Button Commands</span></a>
+    <a href="index.html" class="next"><span class="nav-dir">↩ Back to</span><span class="nav-title">Introduction</span></a>
+  </div>
+</main>
+</body>
+</html>

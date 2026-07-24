@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audio Files — Lifeline Twitch Voice Controller</title>
+<link rel="stylesheet" href="style.css"></head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><div class="game-title">Lifeline: Operator's Side</div><div class="proj-title">Twitch Voice Controller</div></div>
+  <div class="nav-section"><div class="nav-section-label">Getting Started</div>
+    <a href="index.html">Introduction</a><a href="requirements.html">Requirements</a><a href="installation.html">Installation</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Setup Guides</div>
+    <a href="virtual-audio.html">Virtual Audio Cable <span class="badge">Required</span></a>
+    <a href="twitch.html">Twitch Connection</a><a href="controller.html">Virtual Controller</a>
+    <a href="pcsx2.html">PCSX2 Configuration</a><a href="audio-files.html" class="active">Audio Files</a><a href="tts.html">Text-to-Speech</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Using the Bot</div>
+    <a href="settings.html">Settings Reference</a><a href="commands.html">Commands List</a>
+    <a href="timing.html">Circle Button Timing</a><a href="chat-buttons.html">Chat Button Commands</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Help</div><a href="troubleshooting.html">Troubleshooting</a></div>
+</nav>
+<main class="main">
+  <div class="page-hero">
+    <div class="eyebrow">Setup Guides</div>
+    <h1>Audio Files</h1>
+    <p class="lead">Use your own recorded voice clips for commands instead of — or alongside — text-to-speech.</p>
+  </div>
+
+  <h2>Why Use Audio Files?</h2>
+  <p>The game's voice recognition was tuned to the PS2 USB Headset and human speech patterns. A recorded human voice is more reliably recognised than TTS synthesis, especially for longer or unusual words. If you or someone else records the command words clearly, recognition rates improve significantly.</p>
+  <p>Audio files and TTS work together — you can have files for the common commands and let TTS handle everything else.</p>
+
+  <h2>File Naming</h2>
+  <p>The filename must match the command word or phrase <strong>exactly</strong> (case-insensitive). The bot looks for:</p>
+  <pre><code>go.wav        ← matches the command "go"
+YES.WAV       ← also matches "yes" (case-insensitive)
+go back.wav   ← matches the phrase "go back"</code></pre>
+  <p>Supported formats: <code>.wav</code> <code>.mp3</code> <code>.ogg</code> <code>.flac</code> <code>.aiff</code></p>
+  <p><strong>WAV is recommended</strong> — it loads with no decode overhead and avoids any codec issues.</p>
+
+  <h2>Folder Structure</h2>
+  <p>Put all files in a single folder. Subfolders are not scanned. Example:</p>
+  <pre><code>C:\lifeline-audio\
+  ├── go.wav
+  ├── yes.wav
+  ├── no.wav
+  ├── stop.wav
+  ├── check.wav
+  ├── walk.wav
+  ├── run.wav
+  ├── left.wav
+  ├── right.wav
+  ├── go back.wav
+  ├── zoom in.wav
+  └── ...</code></pre>
+
+  <h2>Recording Tips</h2>
+  <ul>
+    <li>Speak clearly and at a normal pace — do not rush or over-enunciate</li>
+    <li>Record in a quiet room to minimise background noise</li>
+    <li>Use a decent microphone — even a gaming headset is fine</li>
+    <li>Clip each word or phrase tightly — remove long silences at the start and end</li>
+    <li>Normalise the volume so all files are at roughly the same level</li>
+    <li>Mono 44100 Hz WAV is ideal — stereo works but is unnecessary</li>
+  </ul>
+  <div class="callout info">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body"><p>Audacity (free, <a href="https://www.audacityteam.org" target="_blank">audacityteam.org</a>) is excellent for recording and trimming voice clips. Record each word, trim silence at both ends using Effect → Truncate Silence, then export as WAV.</p></div>
+  </div>
+
+  <h2>Priority Order</h2>
+  <p>When a command is triggered, the bot resolves audio in this order:</p>
+  <ol>
+    <li><strong>Audio file</strong> — if a matching file exists in the folder, it is used</li>
+    <li><strong>TTS</strong> — if TTS is enabled and no file exists, the word is synthesised</li>
+    <li><strong>Skipped</strong> — if neither is available, the command is logged as <code>! word (no_file)</code> and nothing is spoken</li>
+  </ol>
+  <p>You can override this by enabling <strong>Always use TTS</strong> in settings, which ignores audio files entirely and synthesises everything.</p>
+
+  <h2>Setting the Folder</h2>
+  <p>In the bot, go to <strong>⚙️ Settings → Audio → Audio files folder</strong> and click <strong>Browse…</strong> to select your folder. Click <strong>💾 Save Settings</strong>.</p>
+  <p>The folder is cached after first scan — if you add new files to the folder while the bot is running, you do not need to restart. The cache clears automatically when you change the folder path.</p>
+
+  <h2>Phrase Audio Files</h2>
+  <p>Multi-word phrases can have their own audio files too. Name the file after the full phrase:</p>
+  <pre><code>go back.wav
+zoom in.wav
+microphone check.wav
+where am i.wav</code></pre>
+  <p>If a phrase audio file exists, it is played as a single clip rather than splitting into individual words. This sounds much more natural for scenario questions like <em>"what's a philosopher's stone"</em>.</p>
+
+  <div class="page-nav">
+    <a href="pcsx2.html"><span class="nav-dir">← Previous</span><span class="nav-title">PCSX2 Configuration</span></a>
+    <a href="tts.html" class="next"><span class="nav-dir">Next →</span><span class="nav-title">Text-to-Speech</span></a>
+  </div>
+</main>
+</body>
+</html>

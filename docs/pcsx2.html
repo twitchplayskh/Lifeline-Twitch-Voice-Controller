@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PCSX2 Configuration — Lifeline Twitch Voice Controller</title>
+<link rel="stylesheet" href="style.css"></head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><div class="game-title">Lifeline: Operator's Side</div><div class="proj-title">Twitch Voice Controller</div></div>
+  <div class="nav-section"><div class="nav-section-label">Getting Started</div>
+    <a href="index.html">Introduction</a><a href="requirements.html">Requirements</a><a href="installation.html">Installation</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Setup Guides</div>
+    <a href="virtual-audio.html">Virtual Audio Cable <span class="badge">Required</span></a>
+    <a href="twitch.html">Twitch Connection</a><a href="controller.html">Virtual Controller</a>
+    <a href="pcsx2.html" class="active">PCSX2 Configuration</a><a href="audio-files.html">Audio Files</a><a href="tts.html">Text-to-Speech</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Using the Bot</div>
+    <a href="settings.html">Settings Reference</a><a href="commands.html">Commands List</a>
+    <a href="timing.html">Circle Button Timing</a><a href="chat-buttons.html">Chat Button Commands</a>
+  </div>
+  <div class="nav-section"><div class="nav-section-label">Help</div><a href="troubleshooting.html">Troubleshooting</a></div>
+</nav>
+<main class="main">
+  <div class="page-hero">
+    <div class="eyebrow">Setup Guides</div>
+    <h1>PCSX2 Configuration</h1>
+    <p class="lead">How to configure PCSX2 to use the virtual audio cable as its microphone and the virtual controller as Player 1.</p>
+  </div>
+
+  <div class="callout info">
+    <div class="callout-icon">ℹ️</div>
+    <div class="callout-body"><p>These instructions are written for the <strong>PCSX2 Qt nightly build</strong> (v1.7+). The menu locations may differ slightly in older PCSX2 versions. The nightly build from <a href="https://pcsx2.net/downloads" target="_blank">pcsx2.net</a> is recommended.</p></div>
+  </div>
+
+  <h2>Step 1 — Microphone Setup</h2>
+  <p>This tells PCSX2 to treat the virtual cable's output as a microphone input, which is what the game will read.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Open PCSX2 Settings</h4>
+        <p>In PCSX2, go to <strong>Settings → Audio</strong> (or <strong>Config → Audio Settings</strong> in older versions).</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Find the Microphone / Recording Device setting</h4>
+        <p>Look for a field labelled <strong>Microphone</strong>, <strong>Recording Device</strong>, or <strong>Input Device</strong>. In the nightly Qt build this is under the SPU2 section.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Select CABLE Output</h4>
+        <p>Set this to <strong>CABLE Output (VB-Audio Virtual Cable)</strong>. This is the receiving end of the virtual pipe — audio played to CABLE Input by the bot comes out here as a mic signal.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Set microphone volume</h4>
+        <p>Make sure the microphone volume slider is turned up — if it is at zero the game receives silence even though audio is flowing through the cable. Start at 100% and adjust if the game reacts inconsistently.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Step 2 — Controller Setup</h2>
+  <p>This assigns the virtual DS4/Xbox controller to Player 1 so the bot can press Circle.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Open Controller Settings</h4>
+        <p>Go to <strong>Settings → Controllers</strong>.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Enable the virtual controller in the bot first</h4>
+        <p>Before PCSX2 can see the virtual controller, it must be created. In the Lifeline bot, tick <strong>Enable virtual controller</strong> in Settings and save. The virtual controller now exists as a Windows device.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Select the virtual controller for Port 1</h4>
+        <p>In PCSX2's controller settings, look at Port 1 (Player 1). In the device list you should see the virtual controller — it will be listed as a DualShock 4 or Xbox 360 controller depending on which mode you chose. Select it.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Map the buttons</h4>
+        <p>PCSX2 usually auto-maps standard controllers. If not, manually map at minimum: Circle, Square, Cross, Triangle, L1, R1, L2, Start, Select. The D-Pad can be mapped to the left stick or D-Pad of the virtual controller.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout warning">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-body">
+      <div class="callout-title">Keep the bot running while PCSX2 is open</div>
+      <p>The virtual controller only exists while the bot is running. If you close the bot, PCSX2 loses the controller. Always launch the bot first, enable the controller, then launch PCSX2.</p>
+    </div>
+  </div>
+
+  <h2>Step 3 — USB Headset Emulation</h2>
+  <p>Lifeline specifically checks for the <strong>PS2 USB Headset</strong> device. In PCSX2 you may need to enable USB device emulation to make the game recognise the microphone.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Go to USB Settings</h4>
+        <p>In PCSX2, go to <strong>Settings → USB</strong>.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Assign USB port 1 as Headset</h4>
+        <p>Set USB Port 1 to <strong>Headset</strong> or <strong>PS2 Mic</strong>. The exact label varies by PCSX2 version.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Set the headset's mic input</h4>
+        <p>In the headset device settings, set the microphone source to <strong>CABLE Output (VB-Audio Virtual Cable)</strong> — the same device you set in the audio settings.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Recommended PCSX2 Settings for Lifeline</h2>
+  <table>
+    <tr><th>Setting</th><th>Recommended value</th><th>Why</th></tr>
+    <tr><td>Renderer</td><td>Direct3D 11 or Vulkan</td><td>Best compatibility on Windows</td></tr>
+    <tr><td>EE Cycle Rate</td><td>0 (normal)</td><td>Avoid timing issues with mic detection</td></tr>
+    <tr><td>CDVD read speed</td><td>Slowest / 1x</td><td>Reduces load hitches during voice recognition</td></tr>
+    <tr><td>USB Port 1</td><td>Headset</td><td>Required for game to see the microphone</td></tr>
+    <tr><td>Audio output</td><td>Your normal speakers/headphones</td><td>Keep game audio separate from virtual cable</td></tr>
+    <tr><td>Mic input</td><td>CABLE Output (VB-Audio)</td><td>Receives bot's command audio</td></tr>
+  </table>
+
+  <h2>Verifying Everything Works</h2>
+  <p>Load Lifeline in PCSX2. When the game's microphone check screen appears (or any point where Rio is waiting for a voice command):</p>
+  <ol>
+    <li>Type <code>yes</code> in your Twitch chat</li>
+    <li>Watch the bot's command log — you should see <em>● Circle HELD</em> then <em>▶ yes</em> then <em>○ Circle released</em></li>
+    <li>Rio should respond as if you said "yes" into a real microphone</li>
+  </ol>
+  <p>If Rio does not respond, check the <a href="troubleshooting.html">Troubleshooting</a> page.</p>
+
+  <div class="page-nav">
+    <a href="controller.html"><span class="nav-dir">← Previous</span><span class="nav-title">Virtual Controller</span></a>
+    <a href="audio-files.html" class="next"><span class="nav-dir">Next →</span><span class="nav-title">Audio Files</span></a>
+  </div>
+</main>
+</body>
+</html>
