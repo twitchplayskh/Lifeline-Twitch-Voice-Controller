@@ -8,7 +8,9 @@
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 ---
+For more detailed instructions please visit the github pages 
 
+https://twitchplayskh.github.io/Lifeline-Twitch-Voice-Controller/index.html
 ## What Is This?
 
 **Lifeline: Operator's Side** (2003, PS2/Konami) is a unique game entirely controlled by voice — you speak commands into a microphone and the Operator's companion Rio responds to your commands. There are no button presses for gameplay; the PS2 microphone IS the controller.
