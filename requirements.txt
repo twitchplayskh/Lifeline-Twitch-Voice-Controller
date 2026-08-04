@@ -1,14 +1,10 @@
-# Audio
-sounddevice>=0.4.6
-soundfile>=0.12.1
-numpy>=1.24.0
+# All of these are optional — the app runs without them, with the
+# corresponding feature (audio playback / TTS / virtual gamepad / profanity
+# filter) simply disabled.
 
-# Virtual gamepad (also needs ViGEmBus driver on Windows)
-# Download ViGEmBus from: https://github.com/nefarius/ViGEmBus/releases
-vgamepad>=0.1.0
-
-# Text-to-speech
-pyttsx3>=2.90
-
-# Profanity / hate-word filter
-better-profanity>=0.7.0
+sounddevice
+soundfile
+numpy
+pyttsx3
+vgamepad      # Windows only; also requires the ViGEmBus driver
+better-profanity
