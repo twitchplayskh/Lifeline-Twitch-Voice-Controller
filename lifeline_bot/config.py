@@ -5,9 +5,11 @@ import logging
 import os
 import shutil
 
+from .paths import app_base_dir
+
 logger = logging.getLogger(__name__)
 
-CONFIG_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "config.json")
+CONFIG_FILE = os.path.join(app_base_dir(), "config.json")
 
 DEFAULT_CONFIG = {
     "channel": "",

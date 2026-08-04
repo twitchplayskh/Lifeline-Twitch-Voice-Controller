@@ -9,6 +9,7 @@ from .. import config as config_module
 from ..audio_engine import AudioEngine
 from ..commands import LIFELINE_COMMANDS, LIFELINE_PHRASES, CommandMatcher
 from ..controller_engine import ControllerEngine
+from ..paths import app_base_dir
 from ..playback_service import PlaybackService
 from ..tts_engine import TTSEngine
 from ..word_filter import WordFilter
@@ -53,7 +54,7 @@ class App(tk.Tk, MainTabMixin, SettingsTabMixin, CommandsTabMixin):
         self.word_filter = WordFilter()
         self.command_matcher = CommandMatcher(LIFELINE_COMMANDS, LIFELINE_PHRASES)
 
-        tts_cache_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "_tts_cache")
+        tts_cache_dir = os.path.join(app_base_dir(), "_tts_cache")
         self.playback = PlaybackService(
             audio_engine=self.audio,
             tts_engine=self.tts,
